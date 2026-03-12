@@ -1,3 +1,29 @@
 {
-  
+  "chips": [
+    {"code": "SM8250", "name": "骁龙 865"},
+    {"code": "SM8250-AC", "name": "骁龙 865 Plus"},
+    {"code": "SM8350", "name": "骁龙 888"},
+    {"code": "SM8350-AC", "name": "骁龙 888 Plus"},
+    {"code": "SM8450", "name": "骁龙 8 Gen 1"},
+    {"code": "SM8475", "name": "骁龙 8+ Gen 1"},
+    {"code": "SM8550", "name": "骁龙 8 Gen 2"},
+    {"code": "SM8650", "name": "骁龙 8 Gen 3"},
+    {"code": "SM8750", "name": "骁龙 8 Elite"},
+    {"code": "SM8750-AC", "name": "骁龙 8 Elite 领先版"},
+    
+    {"code": "MT6889", "name": "天玑 1000"},
+    {"code": "MT6889Z", "name": "天玑 1000+"},
+    {"code": "MT6893", "name": "天玑 1200"},
+    {"code": "MT6893Z", "name": "天玑 1300"},
+    {"code": "MT6895", "name": "天玑 8100"},
+    {"code": "MT6895Z", "name": "天玑 8200"},
+    {"code": "MT6983", "name": "天玑 9000"},
+    {"code": "MT6983Z", "name": "天玑 9000+"},
+    {"code": "MT6985", "name": "天玑 9200"},
+    {"code": "MT6985Z", "name": "天玑 9200+"},
+    {"code": "MT6989", "name": "天玑 9300"},
+    {"code": "MT6989Z", "name": "天玑 9300+"},
+    {"code": "MT6991", "name": "天玑 9400"},
+    {"code": "MT6991Z", "name": "天玑 9400+"}
+  ]
 }
