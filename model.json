@@ -1,1 +1,20 @@
-
+{
+  "version": 1,
+  "models": [
+    {
+      "config": {
+        "modelName": "和平精英",
+        "precision": "INT8",
+        "className": "敌人",
+        "classNames": ["敌人"],
+        "gameType": "FPS",
+        "iconName": "model_icon"
+      },
+      "remote": {
+        "fileName": "和平精英_int8.onnx",
+        "downloadUrl": "https://example.com/models/cs2_int8.onnx",
+        "sizeBytes": 2988442
+      }
+    }
+  ]
+}
