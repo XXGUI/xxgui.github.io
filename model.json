@@ -3,17 +3,16 @@
   "models": [
     {
       "config": {
-        "modelName": "和平精英",
-        "precision": "INT8",
-        "className": "敌人",
-        "classNames": ["敌人"],
+        "modelName": "sjzs（精度高速度快，过滤队友）_fp16",
+        "precision": "FP16",
+        "classNames": ["敌人",队友],
         "gameType": "FPS",
         "iconName": "model_icon",
-        "iconUrl": "https://gimg3.baidu.com/topone/src=https%3A%2F%2Fbkimg.cdn.bcebos.com%2Fsmart%2F71cf3bc79f3df8dcd1008f36b94d658b4710b912825a-bkimg-process%2Cv_1%2Crw_1%2Crh_1%2Cmaxl_800%2Cpad_1%3Fx-bce-process%3Dimage%2Fresize%2Cm_pad%2Cw_348%2Ch_348%2Ccolor_ffffff&refer=http%3A%2F%2Fwww.baidu.com&app=2011&size=w931&n=0&g=0n&er=404&q=75&fmt=auto&maxorilen2heic=2000000?sec=1773594000&t=71b3dda5268c08daf3a34e8e969cf9d7"
+        "iconUrl": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/icon/%E4%B8%89%E8%A7%92%E6%B4%B2.png"
       },
       "remote": {
-        "fileName": "和平精英_int8.onnx",
-        "downloadUrl": "https://example.com/models/cs2_int8.onnx",
+        "fileName": "sjzs（精度高速度快，过滤队友）_fp16.onnx",
+        "downloadUrl": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/model/sjzs%EF%BC%88%E7%B2%BE%E5%BA%A6%E9%AB%98%E9%80%9F%E5%BA%A6%E5%BF%AB%EF%BC%8C%E8%BF%87%E6%BB%A4%E9%98%9F%E5%8F%8B%EF%BC%89_fp16.onnx",
         "sizeBytes": 2988442
       }
     }
