@@ -8,16 +8,16 @@
           "title": "qq群",
           "type": "app",
           "data": "url",
-          "color": "#FFFFFF",
-          "textColor": "#D1D5DB"
+          "color": "#00CAFC",
+          "textColor": "#FFFFFF"
         },
         {
           "groupId": "tg",
           "title": "电报",
           "type": "web",
           "data": "url",
-          "color": "#F8FAFC",
-          "textColor": "#CBD5E1"
+          "color": "#229ED9",
+          "textColor": "#FFFFFF"
         }
       ]
     }
