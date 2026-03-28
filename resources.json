@@ -1,0 +1,86 @@
+{
+  "assets": [
+    {
+      "path": "xxgsdk",
+      "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/assets/xxgsdk"
+    }
+  ],
+  "jniLibs": {
+    "arm64-v8a": {
+      "common": {
+        "path": "jniLibs/arm64-v8a/common",
+        "files": [
+          { "file": "ld-android.so", "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/common/ld-android.so" },
+          { "file": "libabcd.so", "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/common/libabcd.so" },
+          { "file": "libadb.so", "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/common/libadb.so" },
+          { "file": "libbase.so", "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/common/libbase.so" },
+          { "file": "libc++.so", "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/common/libc++.so" },
+          { "file": "libcdsprpc.so", "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/common/libcdsprpc.so" },
+          { "file": "libcutils.so", "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/common/libcutils.so" },
+          { "file": "libdl_android.so", "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/common/libdl_android.so" },
+          { "file": "libdmabufheap.so", "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/common/libdmabufheap.so" },
+          { "file": "libhardware.so", "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/common/libhardware.so" },
+          { "file": "libhidlbase.so", "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/common/libhidlbase.so" },
+          { "file": "libQnnCpu.so", "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/common/libQnnCpu.so" },
+          { "file": "libQnnHtp.so", "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/common/libQnnHtp.so" },
+          { "file": "libQnnHtpPrepare.so", "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/common/libQnnHtpPrepare.so" },
+          { "file": "libQnnSystem.so", "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/common/libQnnSystem.so" },
+          { "file": "libutils.so", "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/common/libutils.so" },
+          { "file": "libvmmem.so", "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/common/libvmmem.so" },
+          { "file": "libvndksupport.so", "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/common/libvndksupport.so" },
+          { "file": "vendor.qti.hardware.dsp@1.0.so", "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/common/vendor.qti.hardware.dsp@1.0.so" }
+        ]
+      },
+      "htp": {
+        "V68": {
+          "path": "jniLibs/arm64-v8a/V68",
+          "htp_arch_ver": "V68",
+          "files": [
+            { "file": "libQnnHtpV68Skel.so", "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/V68/libQnnHtpV68Skel.so" },
+            { "file": "libQnnHtpV68Stub.so", "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/V68/libQnnHtpV68Stub.so" }
+          ]
+        },
+        "V69": {
+          "path": "jniLibs/arm64-v8a/V69",
+          "htp_arch_ver": "V69",
+          "files": [
+            { "file": "libQnnHtpV69Skel.so", "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/V69/libQnnHtpV69Skel.so" },
+            { "file": "libQnnHtpV69Stub.so", "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/V69/libQnnHtpV69Stub.so" }
+          ]
+        },
+        "V73": {
+          "path": "jniLibs/arm64-v8a/V73",
+          "htp_arch_ver": "V73",
+          "files": [
+            { "file": "libQnnHtpV73Skel.so", "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/V73/libQnnHtpV73Skel.so" },
+            { "file": "libQnnHtpV73Stub.so", "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/V73/libQnnHtpV73Stub.so" }
+          ]
+        },
+        "V75": {
+          "path": "jniLibs/arm64-v8a/V75",
+          "htp_arch_ver": "V75",
+          "files": [
+            { "file": "libQnnHtpV75Skel.so", "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/V75/libQnnHtpV75Skel.so" },
+            { "file": "libQnnHtpV75Stub.so", "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/V75/libQnnHtpV75Stub.so" }
+          ]
+        },
+        "V79": {
+          "path": "jniLibs/arm64-v8a/V79",
+          "htp_arch_ver": "V79",
+          "files": [
+            { "file": "libQnnHtpV79Skel.so", "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/V79/libQnnHtpV79Skel.so" },
+            { "file": "libQnnHtpV79Stub.so", "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/V79/libQnnHtpV79Stub.so" }
+          ]
+        },
+        "V81": {
+          "path": "jniLibs/arm64-v8a/V81",
+          "htp_arch_ver": "V81",
+          "files": [
+            { "file": "libQnnHtpV81Skel.so", "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/V81/libQnnHtpV81Skel.so" },
+            { "file": "libQnnHtpV81Stub.so", "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/V81/libQnnHtpV81Stub.so" }
+          ]
+        }
+      }
+    }
+  }
+}
