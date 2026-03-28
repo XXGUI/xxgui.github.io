@@ -1,0 +1,19 @@
+[
+    {
+      "pageId": "login",
+      "title": "登录页面",
+      "buttonGroups": [
+        {
+          "groupId": "qq",
+          "title": "qq群",
+          "type": "app",
+          "data": "url"
+        },{
+          "groupId": "tg",
+          "title": "电报",
+          "type": "web",
+          "data": "url"
+        }
+      ]
+    }
+  ]
