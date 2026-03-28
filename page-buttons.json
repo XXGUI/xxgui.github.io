@@ -7,12 +7,17 @@
           "groupId": "qq",
           "title": "qq群",
           "type": "app",
-          "data": "url"
-        },{
+          "data": "url",
+          "color": "#FFFFFF",
+          "textColor": "#D1D5DB"
+        },
+        {
           "groupId": "tg",
           "title": "电报",
           "type": "web",
-          "data": "url"
+          "data": "url",
+          "color": "#F8FAFC",
+          "textColor": "#CBD5E1"
         }
       ]
     }
