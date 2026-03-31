@@ -25,12 +25,6 @@
             "sha256": "db9016d4cf41ec204db654e56639d6e64baa5e7c454b3fb9f1b97661a8a838d8"
           },
           {
-            "file": "libadb.so",
-            "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/common/libadb.so",
-            "size": 5142600,
-            "sha256": "47ea035fa5ed57f6149a2b025bbbd4b21584c355c05d0400416804715e4c12de"
-          },
-          {
             "file": "libbase.so",
             "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/common/libbase.so",
             "size": 218928,
