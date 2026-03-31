@@ -1,24 +1,3 @@
 [
-    {
-      "pageId": "login",
-      "title": "登录页面",
-      "buttonGroups": [
-        {
-          "groupId": "qq",
-          "title": "qq群",
-          "type": "app",
-          "data": "url",
-          "color": "#00CAFC",
-          "textColor": "#FFFFFF"
-        },
-        {
-          "groupId": "tg",
-          "title": "电报",
-          "type": "web",
-          "data": "url",
-          "color": "#229ED9",
-          "textColor": "#FFFFFF"
-        }
-      ]
-    }
+    
   ]
