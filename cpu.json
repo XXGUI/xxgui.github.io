@@ -26,8 +26,6 @@
     {"code": "SM7550", "name": "骁龙 7 Gen 3", "device_id": "552", "htp_arch": "73", "htp_arch_ver": "V73"},
     {"code": "SM7675", "name": "骁龙 7+ Gen 3", "device_id": "577", "htp_arch": "75", "htp_arch_ver": "V75"},
     {"code": "SM7735", "name": "骁龙 7s Gen 3", "device_id": "578", "htp_arch": "73", "htp_arch_ver": "V73"},
-    {"code": "SM7750", "name": "骁龙 7 Gen 4", "device_id": "?", "htp_arch": "75", "htp_arch_ver": "V75"},
-    {"code": "SM7835", "name": "骁龙 7s Gen 4", "device_id": "?", "htp_arch": "75", "htp_arch_ver": "V75"},
     
     {"code": "SM6350", "name": "骁龙 690", "device_id": "363", "htp_arch": "68", "htp_arch_ver": "V68"},
     {"code": "SM6450", "name": "骁龙 6 Gen 1", "device_id": "506", "htp_arch": "69", "htp_arch_ver": "V69"},
@@ -47,8 +45,10 @@
     
     {"code": "MT6895", "name": "天玑 8100", "device_id": null, "htp_arch": null, "htp_arch_ver": null, "note": "联发科芯片，不支持QNN"},
     {"code": "MT6895Z", "name": "天玑 8200", "device_id": null, "htp_arch": null, "htp_arch_ver": null, "note": "联发科芯片，不支持QNN"},
-    {"code": "MT6985", "name": "天玑 8300", "device_id": null, "htp_arch": null, "htp_arch_ver": null, "note": "联发科芯片，不支持QNN"},
-    {"code": "MT6985Z", "name": "天玑 8400", "device_id": null, "htp_arch": null, "htp_arch_ver": null, "note": "联发科芯片，不支持QNN"},
+    {"code": "MT6897", "name": "天玑 8300", "device_id": null, "htp_arch": null, "htp_arch_ver": null, "note": "联发科芯片，不支持QNN"},
+    {"code": "MT6985", "name": "天玑 9200", "device_id": null, "htp_arch": null, "htp_arch_ver": null, "note": "联发科芯片，不支持QNN"},
+    {"code": "MT6985Z", "name": "天玑 9200+", "device_id": null, "htp_arch": null, "htp_arch_ver": null, "note": "联发科芯片，不支持QNN"},
+    {"code": "MT6899", "name": "天玑 8400", "device_id": null, "htp_arch": null, "htp_arch_ver": null, "note": "联发科芯片，不支持QNN"},
     {"code": "MT6989", "name": "天玑 9300", "device_id": null, "htp_arch": null, "htp_arch_ver": null, "note": "联发科芯片，不支持QNN"},
     {"code": "MT6989Z", "name": "天玑 9300+", "device_id": null, "htp_arch": null, "htp_arch_ver": null, "note": "联发科芯片，不支持QNN"},
     {"code": "MT6991", "name": "天玑 9400", "device_id": null, "htp_arch": null, "htp_arch_ver": null, "note": "联发科芯片，不支持QNN"},

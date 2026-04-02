@@ -26,13 +26,42 @@
     }
 
     * { box-sizing: border-box; }
+
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 8px;
+      z-index: 100;
+      padding: 10px 16px;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #0a0c0d;
+      font-weight: 600;
+      font-size: 13px;
+      text-decoration: none;
+    }
+
+    .skip-link:focus {
+      left: 12px;
+      outline: 2px solid #fff;
+      outline-offset: 2px;
+    }
     html {
       scroll-behavior: smooth;
       scroll-padding-top: 76px;
     }
 
+    @media (max-width: 899px) {
+      /* 小屏无顶部 hero，预留粘性导航（多行换行时可能较高） */
+      html { scroll-padding-top: 120px; }
+    }
+
     @media (min-width: 900px) {
       html { scroll-padding-top: 20px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
     }
 
     body {
@@ -103,18 +132,20 @@
         top: 0;
         z-index: 40;
         margin: 0 -16px 16px;
-        padding-left: 16px;
-        padding-right: 16px;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        background: linear-gradient(180deg, rgba(26, 27, 31, 0.97) 0%, rgba(26, 27, 31, 0.92) 85%, transparent 100%);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        border-bottom: 1px solid rgba(0, 219, 104, 0.15);
+        padding: 0;
+        background: linear-gradient(180deg, rgba(20, 22, 26, 0.98) 0%, rgba(26, 27, 31, 0.96) 100%);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(0, 219, 104, 0.14);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
       }
 
       .hero { order: 1; }
       .article { order: 3; }
+
+      header.hero {
+        display: none;
+      }
     }
 
     header.hero {
@@ -161,7 +192,7 @@
       font-size: 14px;
     }
 
-    .doc-nav strong {
+    .doc-nav .doc-nav-title {
       display: block;
       margin-bottom: 10px;
       padding-bottom: 12px;
@@ -170,6 +201,10 @@
       font-size: 11px;
       font-weight: 600;
       letter-spacing: 0.14em;
+    }
+
+    .doc-nav .doc-nav-scroll {
+      min-width: 0;
     }
 
     .doc-nav ol {
@@ -220,6 +255,14 @@
       opacity: 0.95;
     }
 
+    .doc-nav a:focus-visible {
+      outline: 2px solid rgba(0, 219, 104, 0.55);
+      outline-offset: 2px;
+    }
+
+    .nav-label-short { display: none; }
+    .nav-label-full { display: inline; }
+
     @media (min-width: 900px) {
       .doc-nav {
         position: sticky;
@@ -246,46 +289,44 @@
         border-left: none;
         border-right: none;
         border-top: none;
-        padding: 12px 0 12px;
+        padding: 0;
         background: linear-gradient(180deg, rgba(22, 24, 28, 0.98) 0%, rgba(26, 27, 31, 0.96) 100%);
         box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
         border-bottom: 1px solid rgba(0, 219, 104, 0.12);
       }
 
-      .doc-nav strong {
+      .doc-nav .doc-nav-title {
         display: none;
       }
 
       .doc-nav .doc-nav-inner {
-        display: flex;
-        flex-wrap: nowrap;
-        gap: 0;
-        overflow-x: auto;
-        overflow-y: hidden;
-        padding: 4px 0 6px;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: thin;
-        scrollbar-color: rgba(0, 219, 104, 0.35) transparent;
+        display: block;
+        padding: 10px 12px 12px;
       }
 
-      .doc-nav .doc-nav-inner::-webkit-scrollbar {
-        height: 3px;
+      .doc-nav .doc-nav-scroll {
+        overflow: visible;
+        min-width: 0;
+        padding: 0;
       }
-      .doc-nav .doc-nav-inner::-webkit-scrollbar-thumb {
-        background: rgba(0, 219, 104, 0.35);
-        border-radius: 2px;
-      }
+
+      .nav-label-short { display: inline; }
+      .nav-label-full { display: none; }
 
       .doc-nav ol {
         display: flex;
         flex-direction: row;
-        flex-wrap: nowrap;
+        flex-wrap: wrap;
+        align-items: center;
         gap: 8px;
-        padding: 0 2px;
+        row-gap: 10px;
+        padding: 0;
+        margin: 0;
       }
 
       .doc-nav li {
-        flex: 0 0 auto;
+        flex: 0 1 auto;
+        max-width: 100%;
       }
 
       .doc-nav a {
@@ -300,7 +341,7 @@
         background: rgba(255, 255, 255, 0.04);
         border: 1px solid rgba(255, 255, 255, 0.06);
         white-space: nowrap;
-        max-width: 15em;
+        max-width: 100%;
         overflow: hidden;
         text-overflow: ellipsis;
       }
@@ -313,9 +354,10 @@
 
       .doc-nav a.is-active {
         color: var(--nav-active-text);
-        font-weight: 500;
-        background: rgba(0, 219, 104, 0.09);
-        border-color: rgba(45, 212, 138, 0.2);
+        font-weight: 600;
+        background: rgba(0, 219, 104, 0.12);
+        border-color: rgba(45, 212, 138, 0.28);
+        box-shadow: 0 0 0 1px rgba(0, 219, 104, 0.12);
       }
     }
 
@@ -323,6 +365,16 @@
 
     .article > section:first-child {
       margin-top: 0;
+    }
+
+    main.article:focus {
+      outline: none;
+    }
+
+    main.article:focus-visible {
+      outline: 2px solid rgba(0, 219, 104, 0.55);
+      outline-offset: 2px;
+      border-radius: 4px;
     }
 
     h2 {
@@ -422,32 +474,29 @@
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">跳到正文</a>
   <div class="page">
-    <header class="hero">
-      <h1>辅助瞄准助手</h1>
-      <span class="badge">详细使用教程</span>
-      <p>本页说明如何操作「辅助瞄准助手」：登录、资源包、模型与屏幕识别、外设与无线配对，以及悬浮窗菜单的点击与长按。若你使用的版本界面文案或入口略有不同，以手机上的实际界面为准。</p>
-    </header>
-
     <nav class="doc-nav" aria-label="文档目录">
       <div class="doc-nav-inner">
-        <strong>目录</strong>
-        <ol>
-          <li><a href="#login">登录与初始化</a></li>
-          <li><a href="#resource-pack">资源包：下载、校验与手动导入</a></li>
-          <li><a href="#main-tabs">主界面底部导航</a></li>
-          <li><a href="#model-tab">模型页：本地与在线模型</a></li>
-          <li><a href="#model-sheet">模型信息（主界面弹窗里填什么）</a></li>
-          <li><a href="#overlay-params">悬浮窗里还能调什么</a></li>
-          <li><a href="#adb-pair">ADB 与无线配对</a></li>
-          <li><a href="#overlay-l1">悬浮窗一级菜单（点击 / 长按）</a></li>
-          <li><a href="#overlay-l2">二级配置面板（各菜单子项）</a></li>
-          <li><a href="#caveats">注意事项与常见问题</a></li>
-        </ol>
+        <strong class="doc-nav-title">目录</strong>
+        <div class="doc-nav-scroll">
+          <ol>
+            <li><a href="#login" title="一、登录与初始化"><span class="nav-label-full">登录与初始化</span><span class="nav-label-short">登录</span></a></li>
+            <li><a href="#resource-pack" title="二、资源包：下载、校验与手动导入"><span class="nav-label-full">资源包：下载、校验与手动导入</span><span class="nav-label-short">资源包</span></a></li>
+            <li><a href="#main-tabs" title="三、主界面底部导航"><span class="nav-label-full">主界面底部导航</span><span class="nav-label-short">底部导航</span></a></li>
+            <li><a href="#model-tab" title="四、模型页：本地与在线模型"><span class="nav-label-full">模型页：本地与在线模型</span><span class="nav-label-short">模型页</span></a></li>
+            <li><a href="#model-sheet" title="五、模型参数配置（主界面弹窗）"><span class="nav-label-full">模型信息（主界面弹窗里填什么）</span><span class="nav-label-short">模型参数</span></a></li>
+            <li><a href="#overlay-params" title="六、悬浮窗里还能调什么"><span class="nav-label-full">悬浮窗里还能调什么</span><span class="nav-label-short">悬浮窗</span></a></li>
+            <li><a href="#adb-pair" title="七、ADB 与无线配对"><span class="nav-label-full">ADB 与无线配对</span><span class="nav-label-short">ADB</span></a></li>
+            <li><a href="#overlay-l1" title="八、悬浮窗一级菜单（点击 / 长按）"><span class="nav-label-full">悬浮窗一级菜单（点击 / 长按）</span><span class="nav-label-short">一级菜单</span></a></li>
+            <li><a href="#overlay-l2" title="九、二级配置面板（各菜单子项）"><span class="nav-label-full">二级配置面板（各菜单子项）</span><span class="nav-label-short">二级面板</span></a></li>
+            <li><a href="#caveats" title="十、注意事项与常见问题"><span class="nav-label-full">注意事项与常见问题</span><span class="nav-label-short">常见问题</span></a></li>
+          </ol>
+        </div>
       </div>
     </nav>
 
-    <main class="article">
+    <main class="article" id="main-content" tabindex="-1">
     <section id="login">
       <h2>一、登录与初始化</h2>
       <ol class="steps">
@@ -708,19 +757,20 @@
 
       var links = nav.querySelectorAll('a[href^="#"]');
       var sections = article.querySelectorAll('section[id]');
+      var scrollWrap = nav.querySelector('.doc-nav-scroll');
       if (!sections.length || !links.length) return;
 
-      function getViewportBias() {
-        return window.innerWidth < 900 ? 88 : 28;
-      }
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      var prevActiveId = sections[0].id;
 
+      /** 以视口约 1/3 高度处为「当前章节」判定线，比固定像素更稳 */
       function updateActiveNav() {
-        var y = window.scrollY + getViewportBias();
+        var line = window.scrollY + window.innerHeight * 0.32;
         var activeId = sections[0].id;
         for (var i = 0; i < sections.length; i++) {
           var sec = sections[i];
           var top = sec.getBoundingClientRect().top + window.scrollY;
-          if (y + 1 >= top) activeId = sec.id;
+          if (top <= line + 1) activeId = sec.id;
         }
 
         links.forEach(function (link) {
@@ -730,6 +780,23 @@
           if (on) link.setAttribute('aria-current', 'location');
           else link.removeAttribute('aria-current');
         });
+
+        if (activeId !== prevActiveId && scrollWrap && window.innerWidth < 900) {
+          if (scrollWrap.scrollWidth > scrollWrap.clientWidth + 2) {
+            var activeLink = nav.querySelector('a[href="#' + activeId + '"]');
+            if (activeLink) {
+              var wrapRect = scrollWrap.getBoundingClientRect();
+              var linkRect = activeLink.getBoundingClientRect();
+              var pad = 10;
+              if (linkRect.left < wrapRect.left + pad || linkRect.right > wrapRect.right - pad) {
+                var opts = { inline: 'center', block: 'nearest' };
+                if (!reduceMotion.matches) opts.behavior = 'smooth';
+                activeLink.scrollIntoView(opts);
+              }
+            }
+          }
+        }
+        prevActiveId = activeId;
       }
 
       var ticking = false;
