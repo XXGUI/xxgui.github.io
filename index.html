@@ -426,7 +426,7 @@
     <header class="hero">
       <h1>辅助瞄准助手</h1>
       <span class="badge">详细使用教程</span>
-      <p>下文按当前工程实现整理：登录与校验、离线资源包、无线配对、在线/本地模型、主界面模型信息与 <span class="path">config.json</span> 高级参数、悬浮窗一级/二级菜单及交互说明。若你使用的发行包修改了文案或关闭部分功能，以实际界面为准。</p>
+      <p>本页说明如何操作「辅助瞄准助手」：登录、资源包、模型与屏幕识别、外设与无线配对，以及悬浮窗菜单的点击与长按。若你使用的版本界面文案或入口略有不同，以手机上的实际界面为准。</p>
     </header>
 
     <nav class="doc-nav" aria-label="文档目录">
@@ -437,8 +437,8 @@
           <li><a href="#resource-pack">资源包：下载、校验与手动导入</a></li>
           <li><a href="#main-tabs">主界面底部导航</a></li>
           <li><a href="#model-tab">模型页：本地与在线模型</a></li>
-          <li><a href="#model-sheet">主界面「模型参数配置」说明</a></li>
-          <li><a href="#config-json"><span class="path">config.json</span> 与模型高级参数</a></li>
+          <li><a href="#model-sheet">模型信息（主界面弹窗里填什么）</a></li>
+          <li><a href="#overlay-params">悬浮窗里还能调什么</a></li>
           <li><a href="#adb-pair">ADB 与无线配对</a></li>
           <li><a href="#overlay-l1">悬浮窗一级菜单（点击 / 长按）</a></li>
           <li><a href="#overlay-l2">二级配置面板（各菜单子项）</a></li>
@@ -451,53 +451,51 @@
     <section id="login">
       <h2>一、登录与初始化</h2>
       <ol class="steps">
-        <li>启动应用后进入登录页，输入<strong>卡密</strong>完成在线校验（见 <code>LoginActivity</code>）。若本地已有上次登录信息，可能显示「正在初始化验证…」并自动尝试登录。</li>
-        <li>校验通过前无法使用需联网授权的功能；网络异常时请稍后重试或检查卡密是否有效。</li>
+        <li>打开应用后，在登录页输入<strong>卡密</strong>并完成验证。若之前登录过，可能会先出现「正在初始化验证…」，请稍等。</li>
+        <li>验证失败或网络不好时，请检查网络、卡密是否有效，或稍后重试。</li>
       </ol>
-      <div class="note">登录通过后进入主界面（<code>MainActivity</code>），底部为四个 Tab：ADB、模型、外设、教程。</div>
+      <div class="note">登录成功后进入主界面，底部有四个入口：<strong>ADB、模型、外设、教程</strong>，点按即可切换。</div>
     </section>
 
     <section id="resource-pack">
       <h2>二、资源包：下载、校验与手动导入</h2>
-      <p>大型 <code>assets</code> / <code>jniLibs</code> 可从 APK 中拆出，通过云端清单分项下载或手动导入，由 <code>OfflineResourceManager</code> 管理。</p>
+      <p>首次使用往往需要先把<strong>资源包</strong>准备齐全（界面里会有一块「资源包」卡片）。按提示完成下载或导入后，才能正常使用后面的模型功能。</p>
 
-      <h3>2.1 校验顺序与前置条件</h3>
+      <h3>2.1 你需要先等什么</h3>
       <ul class="bullets">
-        <li>须先成功获取 <strong>cpu.json</strong>（设备/芯片信息相关清单入口）。</li>
-        <li>若工程内配置了远程资源清单 URL，还须成功获取 <strong>resources.json</strong>，再与本地对比缺失项。</li>
-        <li>界面文案说明：「须先成功获取 cpu.json；若已配置远程资源清单 URL，还须成功获取 resources.json，之后才会校验并下载资源包。」</li>
+        <li>应用会按提示先完成<strong>清单与校验</strong>（界面上会说明须先满足哪些条件）。请保持网络畅通，直到不再出现「请先完成：…」这类提示。</li>
+        <li>若提示需要远程清单，请确认网络正常；若一直失败，可稍后重试或联系提供方。</li>
       </ul>
 
-      <h3>2.2 界面状态说明</h3>
+      <h3>2.2 界面上常见状态</h3>
       <ul class="bullets">
-        <li><strong>正在校验资源包…</strong>：正在校验 cpu.json / 远程清单 / 本地缺口，尚未进入分项下载进度。</li>
+        <li><strong>正在校验资源包…</strong>：仍在检查，请稍候。</li>
         <li><strong>正在加载清单</strong>：清单加载中。</li>
-        <li><strong>清单与缺口</strong>：若远程清单暂未就绪，可能「暂按内置项校验」，成功加载 <code>resources.json</code> 后会追加本机 HTP Skel/Stub 等项。</li>
-        <li><strong>分项下载</strong>：多文件并行下载（并发上限 5）；列表中可见「下载中 / 等待下载 / 已存在 / 下载完成」等状态及字节大小。</li>
-        <li><strong>停止下载</strong>：用户停止后未完成的项标记为「未下载·已暂停」，可再次「开始下载」或「重试」。</li>
-        <li>远程清单在应用私有目录中有缓存，超过约 <strong>24 小时</strong> 后下次启动会重新请求。</li>
+        <li><strong>分项下载</strong>：会列出多个文件及进度，可看到「下载中」「等待下载」「已存在」「下载完成」等字样。</li>
+        <li><strong>停止下载</strong>：中途停止后，未完成项会标成「未下载·已暂停」，可再点<strong>开始下载</strong>或<strong>重试</strong>。</li>
+        <li>清单有时会<strong>缓存一段时间</strong>，隔一段时间再打开应用可能会重新拉取。</li>
       </ul>
 
-      <h3>2.3 手动导入 <span class="path">.xxg</span></h3>
-      <p>「手动导入」会选择文件：实为 <strong>zip</strong> 包，扩展名为 <code>.xxg</code>，根目录需包含 <span class="path">assets/</span> 与 <span class="path">jniLibs/</span>。导入过程在后台线程执行，完成后会刷新资源状态。</p>
+      <h3>2.3 手动导入</h3>
+      <p>若你拿到的是资源包文件，点<strong>手动导入</strong>，按提示选择文件即可。导入完成后界面会刷新；若失败，请确认文件格式与来源是否由提供方指定。</p>
 
-      <h3>2.4 与「模型」页的关系</h3>
-      <p>仅当资源包就绪（代码中 <code>offlineResourceReadyForModels</code>）后，「模型」页才会显示<strong>添加本地模型</strong>与本地模型列表。否则会提示先完成资源包；若 Tab 切换时资源未就绪，可能 Toast「资源包还没加载完成」。</p>
+      <h3>2.4 和「模型」页的关系</h3>
+      <p>只有资源包<strong>就绪</strong>后，「模型」页才会出现<strong>添加本地模型</strong>和本地模型列表。若未就绪，请先按提示完成资源包；切换 Tab 时若提示「资源包还没加载完成」，请返回处理资源包后再试。</p>
 
-      <div class="warn">若未在 <code>OfflineResourceConstants</code> 中配置 <code>REMOTE_MANIFEST_URL</code> 或 <code>BUNDLE_URL</code>，在线下载入口会提示需先配置地址。</div>
+      <div class="warn">若界面提示「请配置远程地址」或无法下载，说明当前版本需要服务端提供下载地址，请联系你的资源或应用提供方。</div>
     </section>
 
     <section id="main-tabs">
       <h2>三、主界面底部导航</h2>
       <table>
         <thead>
-          <tr><th>Tab</th><th>说明</th></tr>
+          <tr><th>底部入口</th><th>说明</th></tr>
         </thead>
         <tbody>
           <tr><td>ADB</td><td>本机 ADB 可执行、设备连接、触摸服务状态、无线配对入口与日志等（具体以界面为准）。</td></tr>
           <tr><td>模型</td><td>资源包卡片、添加本地模型、已下载模型列表、在线模型列表、启动/停止屏幕识别与推理服务。</td></tr>
           <tr><td>外设</td><td>手柄等外设管理与映射相关能力。</td></tr>
-          <tr><td>教程</td><td>应用内教程（可配置远程教程列表 URL，由 WebView 展示）。</td></tr>
+          <tr><td>教程</td><td>应用内图文或网页教程（若有）。</td></tr>
         </tbody>
       </table>
     </section>
@@ -506,92 +504,64 @@
       <h2>四、模型页：本地与在线模型</h2>
 
       <h3>4.1 添加本地模型</h3>
-      <p>点击<strong>添加本地模型</strong>，通过系统文件选择器选择 <code>.onnx</code> 文件；文件会纳入应用管理的模型目录（与 <code>XXGAIConfig.MODEL_DIR</code> 一致，默认 <span class="path">/sdcard/.xxgai/model</span>）。</p>
+      <p>点<strong>添加本地模型</strong>，在系统文件选择器里选中你已有的模型文件（一般为扩展名是 <strong>.onnx</strong> 的文件）。导入后出现在下方本地列表中。</p>
 
       <h3>4.2 本地模型卡片操作</h3>
       <ul class="bullets">
-        <li><strong>点击卡片主体</strong>：打开底部弹窗「<strong>模型参数配置</strong>」（见下一节），编辑展示名称、精度、类名、关联应用等。</li>
-        <li><strong>向左滑动卡片</strong>：露出右侧「删除」区域，滑到足够位置后点击红色区域可删除该本地模型。</li>
-        <li><strong>启动 / 停止</strong>：卡片右侧按钮。若当前模型已激活且识别运行中，显示「停止」；否则为「启动」。短时间去重（约 200ms）防连点。启动时会激活该模型并走开始屏幕识别流程（需已授权录屏、悬浮窗等）。</li>
+        <li><strong>点卡片主体</strong>：打开底部弹窗「<strong>模型参数配置</strong>」（见下一节），编辑名称、图标、游戏类型、关联应用等展示信息。</li>
+        <li><strong>向左滑卡片</strong>：露出右侧「删除」，滑开后再点红色区域可删除该模型。</li>
+        <li><strong>启动 / 停止</strong>：卡片右侧按钮。当前正在用本模型做屏幕识别时显示「停止」，否则显示「启动」。点「启动」会按当前模型开始识别流程（需已允许<strong>录屏</strong>、<strong>悬浮窗</strong>等权限）。</li>
       </ul>
 
       <h3>4.3 在线模型</h3>
-      <p>列表由远程配置拉取；加载中显示「正在加载在线模型」。失败或为空时提示「在线模型加载失败」或「暂无在线模型」。</p>
-      <p>单张卡片上点击<strong>下载</strong>：按 URL 下载到模型目录；若文件已存在且非空则跳过网络直接视为完成。下载完成后会尝试拉取封面图标并写入该模型的手动配置。</p>
-      <p>已与本地文件名（不区分大小写）相同的在线项<strong>不再显示</strong>在在线列表中，避免重复下载。</p>
+      <p>列表由服务端提供；加载中会显示「正在加载在线模型」。失败或没有时提示「在线模型加载失败」或「暂无在线模型」。</p>
+      <p>在卡片上点<strong>下载</strong>即可下载到本机；若已下载过同名文件，一般不会再重复下载。</p>
+      <p>已下载到本地的模型，通常不会在列表里再出现一份，避免重复。</p>
     </section>
 
     <section id="model-sheet">
       <h2>五、主界面「模型参数配置」说明</h2>
-      <p>对应数据结构 <code>XXGAIConfig.ModelManualConfig</code>，用于列表展示与启动关联应用，与悬浮层推理参数（<code>ModelOverlayConfig</code>）分开存储。</p>
+      <p>点某个本地模型卡片后弹出的表单，主要管<strong>列表里怎么显示</strong>、以及是否<strong>关联游戏应用</strong>。和「识别准不准、各种滑块」不是同一套——那些要在<strong>悬浮窗</strong>里调（见下一节）。</p>
       <table>
         <thead>
-          <tr><th>字段</th><th>含义与注意</th></tr>
+          <tr><th>项</th><th>怎么填</th></tr>
         </thead>
         <tbody>
-          <tr><td>模型名称</td><td>列表中显示名称，默认可与文件名相关。</td></tr>
-          <tr><td>输入尺寸</td><td>展示用；保存时若填写则须为 <strong>32 的倍数</strong>，否则会 Toast「输入尺寸必须是32的倍数」并无法保存。</td></tr>
-          <tr><td>显示图标</td><td>可从文件选择图片；也可使用资源名或模型目录下图标文件（与图标解析逻辑一致）。</td></tr>
-          <tr><td>模型精度</td><td>展示标签（如 FP16），供卡片详情行展示。</td></tr>
-          <tr><td>游戏类型</td><td>如 FPS / MOBA 等，影响卡片角标颜色与展示。</td></tr>
-          <tr><td>关联应用</td><td>选择本机已安装应用（包名 + 名称）；若授予「查询所有应用」类权限，列表更完整。</td></tr>
-          <tr><td>启动应用</td><td>开关：为开且已选关联应用时，从模型页「启动」识别流程中可自动打开该应用（见代码中 <code>autoOpenApp</code>）。</td></tr>
-          <tr><td>识别类名</td><td>多行类名，用于界面展示与悬浮层「识别目标」等；与模型输出类别对应时需与训练标注一致。</td></tr>
+          <tr><td>模型名称</td><td>列表中显示的名字，可自取或按文件名。</td></tr>
+          <tr><td>输入尺寸</td><td>展示用数字；若填写，须为 <strong>32 的倍数</strong>，否则会提示无法保存。</td></tr>
+          <tr><td>显示图标</td><td>可从相册或文件里选一张图；也可按说明使用内置图标名。</td></tr>
+          <tr><td>模型精度</td><td>如 FP16 等，用于卡片上的小标签展示。</td></tr>
+          <tr><td>游戏类型</td><td>如 FPS、MOBA 等，影响卡片角标样式。</td></tr>
+          <tr><td>关联应用</td><td>从本机已安装应用里选一个；若系统限制列表不全，可在系统设置里给本应用相应权限后再试。</td></tr>
+          <tr><td>启动应用</td><td>打开后，从本页点「启动」时若已选关联应用，可自动帮你打开该游戏/应用。</td></tr>
+          <tr><td>识别类名</td><td>按模型能识别的类别填写，用于界面和悬浮窗里切换「识别目标」；需与模型训练时的类别一致。</td></tr>
         </tbody>
       </table>
-      <p>底部<strong>确定</strong>写入配置；<strong>取消</strong>关闭不保存。</p>
+      <p>底部<strong>确定</strong>保存；<strong>取消</strong>关闭且不保存。</p>
     </section>
 
-    <section id="config-json">
-      <h2>六、<span class="path">config.json</span> 与模型高级参数</h2>
-      <p>根目录默认 <span class="path">/sdcard/.xxgai/config.json</span>。模型元数据键为 <code>modelManualConfigs</code>；悬浮窗/推理相关键为 <code>modelOverlayConfigs</code>，键均为<strong>归一化后的模型文件绝对路径</strong>（避免同一路径不同写法导致配置分裂）。</p>
-
-      <h3>6.1 推理与 ONNX（<code>ModelOverlayConfig</code>）</h3>
-      <p>下列项多数可在悬浮窗「模型参数」二级面板中调整一部分；其余需直接编辑 JSON 或在后续版本 UI 中暴露。</p>
-      <table>
-        <thead>
-          <tr><th>字段/概念</th><th>说明</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><code>modelInputSize</code></td><td>模型输入空间尺寸（如 640）；与 letterbox 缩放相关。</td></tr>
-          <tr><td><code>onnxInputLayout</code></td><td><code>AUTO</code> / <code>NCHW</code> / <code>NHWC</code>。推断错误时请手动指定。</td></tr>
-          <tr><td><code>onnxInputChannelOrder</code></td><td><code>RGB</code> 或 <code>BGR</code>（常见于 OpenCV 导出）。</td></tr>
-          <tr><td><code>onnxOutputName</code></td><td>检测头输出节点名；多输出模型务必填写，避免误用非检测张量。</td></tr>
-          <tr><td><code>onnxOutputLayout</code></td><td><code>AUTO</code> / <code>NC</code>(ROWS) / <code>CN</code>(CHANNELS) 等，描述 rank-3 检测输出语义。</td></tr>
-          <tr><td><code>onnxYoloVariant</code></td><td><code>AUTO</code> / <code>V5</code> / <code>V8</code> 等，对应 YOLO 检测头列语义。</td></tr>
-          <tr><td><code>captureMaxLongEdgePx</code></td><td>截屏/VirtualDisplay 输出长边上限（像素），0 表示不主动限制；大屏可降到 1280～1600 减轻每帧拷贝。修改后常在收起一级菜单时重建抓图链路。</td></tr>
-          <tr><td><code>inferenceMinIntervalMs</code></td><td>连续两次调度推理的最小间隔（1～5000 ms）。</td></tr>
-          <tr><td><code>maxDetections</code></td><td>后处理保留的最大检测数（上限与 UI 滑块一致部分为 1～10 档）。</td></tr>
-          <tr><td><code>inferenceConfidence</code></td><td>置信度阈值（0.10～1.00）。</td></tr>
-          <tr><td><code>inferenceNmsIou</code></td><td>NMS IoU（0.01～1.00）。</td></tr>
-          <tr><td><code>qnnAccelerationEnabled</code></td><td>高通 QNN 偏好开关；非高通或会话侧会忽略；缺库时可关。</td></tr>
-          <tr><td><code>nnapiAccelerationEnabled</code></td><td>NNAPI 加速开关。</td></tr>
-        </tbody>
-      </table>
-
-      <h3>6.2 画框与识别范围</h3>
+    <section id="overlay-params">
+      <h2>六、悬浮窗里还能调什么</h2>
+      <p>开始屏幕识别后，屏幕上会出现<strong>悬浮菜单</strong>。与「识别效果、框线、速度、辅助功能」相关的参数，基本都在这里调，<strong>不用去找系统文件夹或自己改配置文件</strong>。</p>
       <ul class="bullets">
-        <li><code>boxStyleIndex</code>、<code>boxColorValue</code>、<code>boxLineWidthIndex</code>、<code>showClassNameEnabled</code>、<code>showConfidenceEnabled</code></li>
-        <li><code>recognitionRangePx</code>、<code>recognitionRangeVisible</code>、<code>recognitionRangeFilterEnabled</code>、<code>recognitionRangeHideBorder</code> 等：中央识别区范围、是否仅保留范围内检测、是否绘制边线。</li>
+        <li>点<strong>模型参数</strong>（或部分入口的<strong>长按</strong>打开二级面板），可改<strong>置信度、NMS、输入尺寸、推理间隔、最大目标数</strong>等；部分机型上还有<strong>加速方式</strong>开关，可按说明尝试。</li>
+        <li>点<strong>显示方框</strong>相关入口，可调<strong>框颜色、粗细、是否显示类名/置信度</strong>，以及<strong>识别范围</strong>（中间区域大小、是否只认范围内目标等）。</li>
+        <li><strong>自动瞄准、自动压枪、自动扳机</strong>等，各自有独立面板：按界面提示框选区域、调数值即可；改完记得点<strong>确定</strong>保存。</li>
       </ul>
-
-      <h3>6.3 自动瞄准 / 压枪 / 扳机（存于同一配置）</h3>
-      <p>包含 PID 参数（<code>autoAimPid*</code>）、触摸区域、偏移单位（绝对/百分比）、扳机模式（<code>连点</code>/<code>连发</code>）、开火间隔与首发延迟等。与二级菜单「自动瞄准」「自动压枪」「自动扳机」面板一致，保存时写入同一 <code>ModelOverlayConfig</code>。</p>
-
-      <div class="note">JSON 中浮点数不允许 NaN/Inf，否则写入失败会导致整份配置保存失败。</div>
+      <div class="note">若某一项在你当前版本里看不到，以实际界面为准；不同机型可选项可能略有差别。</div>
     </section>
 
     <section id="adb-pair">
       <h2>七、ADB 与无线配对</h2>
-      <p>在 <strong>ADB</strong> Tab 可查看连接状态、启动服务、配对相关日志等。无线配对可通过专用悬浮窗完成（标题「<strong>无线配对</strong>」）：输入<strong>配对端口</strong>（最多 5 位数字）与<strong>6 位配对码</strong>，使用内置数字键盘编辑；支持自动扫描配对端口提示（文案如「正在自动扫描配对端口…」）。</p>
-      <p>需<strong>悬浮窗权限</strong>方可显示该面板；若拒绝权限会引导到系统设置开启「显示在其他应用上层」。</p>
-      <div class="warn">ADB 与触摸链路因机型/ROM 差异较大，请以界面日志与官方说明为准；异常时可尝试重试或重启应用。</div>
+      <p>在底部<strong>ADB</strong>一页可查看连接状态、启动服务、查看日志等。需要<strong>无线配对</strong>时，按界面提示打开配对窗口（标题一般为「无线配对」）：输入<strong>配对端口</strong>（数字）和<strong>6 位配对码</strong>，用屏幕上的数字键盘输入即可；有时会出现「正在自动扫描配对端口」等提示，请耐心等待。</p>
+      <p>配对窗口需要<strong>悬浮窗权限</strong>；若被系统拦截，请到系统设置里允许本应用「显示在其他应用上层」。</p>
+      <div class="warn">不同手机系统差异较大，若连不上或触摸异常，请以界面提示为准，可尝试重试、换数据线/网络或重启应用。</div>
     </section>
 
     <section id="overlay-l1">
       <h2>八、悬浮窗一级菜单（点击 / 长按）</h2>
-      <p>屏幕识别运行时在悬浮层显示圆形入口与可展开面板。一级菜单分<strong>上排</strong>与<strong>下排</strong>按钮（见 <code>ScreenCaptureForegroundService</code> 中 <code>upperActionItems</code> / <code>lowerActionItems</code>）。</p>
-      <p class="note">当<strong>一级菜单展开</strong>或<strong>二级配置面板（长按抽屉）打开</strong>时，会<strong>暂停推理</strong>，以减轻负载并避免配置与实时画框争用。</p>
+      <p>识别开始后，点悬浮球可展开菜单。菜单分<strong>上排</strong>、<strong>下排</strong>两区域，每个图标下都有文字说明。</p>
+      <p class="note">菜单展开时，或<strong>长按</strong>打开某一项的详细面板时，画面识别可能会<strong>暂时停一下</strong>，关菜单或点确定后会恢复，属正常现象。</p>
 
       <h3>8.1 上排按钮</h3>
       <table>
@@ -601,32 +571,32 @@
         <tbody>
           <tr>
             <td>显示方框</td>
-            <td>开关：是否绘制检测框（切换 <code>enabled</code> 并触发回调）。</td>
-            <td>打开二级面板：方框颜色、类名/置信度显示、线条粗细、识别范围相关开关与滑块等（与「显示方框」配置对应）。</td>
+            <td>打开/关闭是否在画面上画检测框。</td>
+            <td>打开详细设置：框颜色、是否显示类名/置信度、线条粗细、识别范围等。</td>
           </tr>
           <tr>
             <td>手动触发</td>
-            <td>总开关（若实现中启用）。</td>
-            <td>打开二级面板：手动触发预设、区域、监视类型等（空列表时可新建配置）。</td>
+            <td>总开关（若当前版本提供）。</td>
+            <td>配置手动触发的方案、区域等；没有方案时可按提示新建。</td>
           </tr>
           <tr>
             <td>识别目标</td>
-            <td>在各类别间<strong>循环切换</strong>当前识别类别，并 Toast「当前识别目标：…」；若无类名则提示「当前模型没有可用类名」。</td>
-            <td>打开二级面板：从列表中点选目标类别。</td>
+            <td>在已配置的类别之间<strong>轮流切换</strong>当前要识别的目标；屏幕下方可能有简短提示。</td>
+            <td>从列表里<strong>点选</strong>要识别的类别。</td>
           </tr>
           <tr>
             <td>模型参数</td>
-            <td>直接打开二级面板（与长按相同）。</td>
-            <td>打开二级面板：置信度、NMS、输入尺寸、推理速度、最大识别、QNN/NNAPI 等。</td>
+            <td>打开与「推理、加速」相关的参数页（与长按相同）。</td>
+            <td>同上：置信度、重叠抑制、输入尺寸、推理速度等。</td>
           </tr>
           <tr>
             <td>外设装备</td>
             <td>开关。</td>
-            <td>打开二级面板（若有）。</td>
+            <td>若有更多项，长按进入详情。</td>
           </tr>
           <tr>
             <td>其他设置</td>
-            <td>打开二级面板（当前占位文案可为「敬请期待」类提示）。</td>
+            <td>进入其它杂项（以界面为准）。</td>
             <td>同上。</td>
           </tr>
         </tbody>
@@ -640,38 +610,38 @@
         <tbody>
           <tr>
             <td>性能监控</td>
-            <td>打开二级面板：勾选 FPS/CPU/GPU/延迟/温度等显示项及顺序。</td>
-            <td><strong>不响应长按</strong>（设计如此）；仅单击进入配置。</td>
+            <td>选择要在画面上显示的性能信息（帧率、占用等）及顺序。</td>
+            <td><strong>无需长按</strong>，点一次即可。</td>
           </tr>
           <tr>
             <td>同步找色</td>
             <td>开关。</td>
-            <td>打开二级面板：HSV、取色流程、及与检测相关的置信度/NMS/最大识别等。</td>
+            <td>取色、颜色条件及与识别相关的参数。</td>
           </tr>
           <tr>
             <td>模板匹配</td>
             <td>开关。</td>
-            <td>打开二级面板：模板列表、模板置信度、模板压枪/模板扳机开关等。</td>
+            <td>管理模板、匹配灵敏度及与模板相关的联动选项。</td>
           </tr>
           <tr>
             <td>自动瞄准</td>
             <td>开关。</td>
-            <td>打开二级面板：触摸区域、偏移、PID 全参数、无目标抬手帧数等。</td>
+            <td>框选触摸区域、偏移、灵敏度与阻尼等详细参数。</td>
           </tr>
           <tr>
             <td>自动压枪</td>
             <td>开关。</td>
-            <td>打开二级面板：压枪单位（绝对/百分比）、压枪 X/Y 等。</td>
+            <td>压枪力度与方向等。</td>
           </tr>
           <tr>
             <td>自动扳机</td>
             <td>开关。</td>
-            <td>打开二级面板：开火区域、扳机模式（连点/连发）、中心范围、开火间隔、首发延迟等。</td>
+            <td>开火区域、连点/连发模式、间隔与延迟等。</td>
           </tr>
         </tbody>
       </table>
 
-      <p>二级面板底部通常有<strong>取消</strong>（关闭并可选恢复一级菜单）与<strong>确定</strong>；关闭时会持久化标量配置。若编辑的是「模型参数」，关闭前会将当前置信度/NMS 同步回推理服务。</p>
+      <p>详细面板底部一般有<strong>取消</strong>与<strong>确定</strong>；改完点<strong>确定</strong>才会保存。若在「模型参数」里改了识别相关滑块，保存后会按新设置继续运行。</p>
     </section>
 
     <section id="overlay-l2">
@@ -680,29 +650,29 @@
       <h3>9.1 「显示方框」</h3>
       <ul class="bullets">
         <li>方框颜色；显示类名；方框线条粗细。</li>
-        <li>识别范围：总开关「识别范围」、仅不绘边的「不显示范围」、范围颜色、范围线宽、识别范围大小滑块（约 100～600 px）。</li>
+        <li>识别范围：可开关是否在中间画参考范围、是否隐藏范围边线、颜色与线宽，并用滑块调节范围大小。</li>
       </ul>
 
       <h3>9.2 「模型参数」</h3>
       <ul class="bullets">
-        <li>置信度（10%～100% 档）、NMS 连续滑块、输入尺寸步进、推理速度（ms）、最大识别（1～10）。</li>
-        <li>高通机型显示「QNN加速」开关；以及「NNAPI加速」开关。</li>
+        <li>可滑动调节<strong>置信度</strong>、<strong>重叠框合并程度</strong>、<strong>输入边长</strong>、<strong>两次识别之间的间隔</strong>、<strong>最多显示几个框</strong>等。</li>
+        <li>部分机型上会出现<strong>硬件加速</strong>类开关，可按说明尝试；若不稳定可关掉再试。</li>
       </ul>
 
       <h3>9.3 「识别目标」</h3>
-      <p>展示当前模型可选类别列表；点选一项设为当前目标。无类名时提示「当前模型未加载类别名称」。</p>
+      <p>列出当前模型可用的类别，点选一个作为当前识别目标。若列表为空，请回到主界面「模型参数配置」里检查<strong>识别类名</strong>是否已填写。</p>
 
       <h3>9.4 「性能监控」</h3>
       <p>选择展示指标及顺序（如 FPS、CPU、GPU、延迟、温度等，以界面为准）。</p>
 
       <h3>9.5 「同步找色」</h3>
-      <p>HSV 相关、取色入口、清除；以及置信度/NMS/最大识别与检测后处理联动项。</p>
+      <p>按提示取色、调颜色条件；也可配合识别相关滑块一起用。</p>
 
       <h3>9.6 「模板匹配」</h3>
       <p>新增模板、选择编辑中的模板、模板置信度步进、模板压枪/模板扳机开关。</p>
 
       <h3>9.7 「自动瞄准」</h3>
-      <p>触摸区域框选、显示触摸点、随机触摸、偏移单位（绝对值/百分比）、偏移 X/Y、独立 XY PID 开关与全套 PID/滤波/平滑/积分限幅、无目标抬手帧数等；中间数值可弹出小数字键盘。</p>
+      <p>框选操作区域、偏移量、灵敏度与平滑等；部分数字可点小键盘输入。按界面标签逐项调整即可。</p>
 
       <h3>9.8 「自动压枪」</h3>
       <p>压枪值单位（绝对值/百分比）、压枪 X/Y。</p>
@@ -717,17 +687,16 @@
     <section id="caveats">
       <h2>十、注意事项与常见问题</h2>
       <ul class="bullets">
-        <li><strong>权限</strong>：屏幕录制（MediaProjection）、悬浮窗、存储、蓝牙/位置（外设与旧版蓝牙扫描）等需按系统提示授予。</li>
-        <li><strong>横竖屏与分辨率</strong>：旋转或分辨率变化后，VirtualDisplay 与叠加层会按代码逻辑刷新；若截屏长边或物理分辨率变化，需等待菜单收起后链路重建。</li>
-        <li><strong>性能</strong>：推理间隔、截屏长边、模型输入尺寸、关闭不必要叠加显示均可改善卡顿与发热。</li>
-        <li><strong>配置未生效</strong>：确认保存路径可写；检查模型路径是否在 <code>config.json</code> 中只存一份键；多输出 ONNX 必须配置输出节点名。</li>
-        <li><strong>合规</strong>：请遵守当地法律法规及游戏/应用服务条款，合理使用辅助功能。</li>
+        <li><strong>权限</strong>：首次使用会索要<strong>录屏、悬浮窗、存储</strong>等；连接手柄或蓝牙时可能还要<strong>蓝牙/附近设备/位置</strong>（随系统版本不同），请按提示在系统设置里打开。</li>
+        <li><strong>横竖屏</strong>：旋转手机后若画面或框线位置不对，可先收起悬浮菜单再试；仍异常可停止识别后重新「启动」。</li>
+        <li><strong>卡顿、发热</strong>：可在悬浮窗「模型参数」里适当<strong>加大识别间隔</strong>、降低画面里显示的内容；或换更轻量的模型。</li>
+        <li><strong>改了不生效</strong>：确认在面板里点了<strong>确定</strong>；若识别一直异常，可尝试停止识别、换模型或重启应用。</li>
+        <li><strong>合规</strong>：请遵守法律法规及游戏/应用用户协议，合理使用本应用。</li>
       </ul>
     </section>
 
     <footer>
-      <p>界面配色对齐 ThemeColors：背景 #1A1B1F · 强调色 #00DB68 · 表面 #292E32</p>
-      <p>文档随工程源码整理，修订日期以你本地文件为准。</p>
+      <p>辅助瞄准助手 · 使用说明</p>
     </footer>
     </main>
   </div>
