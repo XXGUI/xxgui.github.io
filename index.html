@@ -1,1049 +1,785 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YOLO5 ASSISTANT // 辅助瞄准协议</title>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Roboto:wght@400;500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --val-red: #ff4655;
-            --val-black: #0f1923;
-            --val-dark-blue: #1f2326;
-            --val-white: #ece8e1;
-            --val-gray: #8b9bb4;
-            --bg-color: #0f1923;
-            --sidebar-width: 300px;
-            --top-bar-height: 60px;
-        }
-        
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>辅助瞄准助手 · 详细使用教程</title>
+  <style>
+    :root {
+      --bg: #1a1b1f;
+      --surface: #292e32;
+      --card: rgba(255, 255, 255, 0.19);
+      --accent: #00db68;
+      --accent-dim: rgba(0, 219, 104, 0.15);
+      --text: #ffffff;
+      --text-muted: #93a2ac;
+      --text-hint: #8c98a0;
+      --warn: #ffb74d;
+      --border: rgba(0, 219, 104, 0.2);
+      --radius: 14px;
+      --font: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+      --nav-text: rgba(196, 204, 212, 0.92);
+      --nav-text-dim: rgba(148, 156, 164, 0.88);
+      --nav-hover-bg: rgba(255, 255, 255, 0.045);
+      --nav-active-text: #7dd3a8;
+      --nav-active-bg: rgba(0, 219, 104, 0.1);
+    }
 
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--val-white);
-            overflow-x: hidden;
-            background-image: radial-gradient(circle at 50% 50%, #1a2733 0%, #0f1923 100%);
-        }
+    * { box-sizing: border-box; }
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 76px;
+    }
 
-        /* 背景装饰网格 */
-        .bg-grid {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: -1;
-            pointer-events: none;
-        }
+    @media (min-width: 900px) {
+      html { scroll-padding-top: 20px; }
+    }
 
-        /* 顶部状态栏 */
-        .top-bar {
-            height: var(--top-bar-height);
-            width: 100%;
-            display: flex;
-            align-items: center;
-            padding: 0 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            background: rgba(15, 25, 35, 0.9);
-            z-index: 100;
-            backdrop-filter: blur(5px);
-            flex-shrink: 0;
-        }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 15px;
+    }
 
-        .menu-toggle {
-            display: none;
-            font-size: 1.5rem;
-            margin-right: 20px;
-            cursor: pointer;
-            color: var(--val-white);
-        }
+    /* 正文内链接（若有）用强调色；目录链接仅用 .doc-nav 规则 */
+    main.article a {
+      color: var(--accent);
+      text-decoration: none;
+    }
 
-        .logo {
-            font-family: 'Oswald', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            color: var(--val-white);
-            margin-right: auto;
-        }
-        
-        .logo span { color: var(--val-red); }
+    main.article a:hover {
+      text-decoration: underline;
+    }
 
-        .status-indicators {
-            display: flex;
-            gap: 20px;
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.8rem;
-            color: var(--val-gray);
-        }
+    /* 页面骨架：大屏左栏导航 + 主内容；小屏主内容内顶栏导航 */
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 20px 16px 64px;
+    }
 
-        .status-item {
-            display: flex;
-            align-items: center;
-        }
+    @media (min-width: 900px) {
+      .page {
+        display: grid;
+        grid-template-columns: 248px minmax(0, 1fr);
+        grid-template-rows: auto 1fr;
+        column-gap: 28px;
+        row-gap: 0;
+        align-items: start;
+        padding: 24px 24px 64px;
+      }
 
-        .status-item::before {
-            content: '';
-            display: inline-block;
-            width: 6px;
-            height: 6px;
-            background: var(--val-red);
-            margin-right: 8px;
-        }
+      .page .hero {
+        grid-column: 2;
+        grid-row: 1;
+      }
 
-        /* 顶部导航栏 */
-        .top-nav {
-            position: sticky;
-            top: 0;
-            background: rgba(15, 25, 35, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            z-index: 100;
-            padding: 0 20px;
-        }
+      .doc-nav {
+        grid-column: 1;
+        grid-row: 1 / -1;
+      }
 
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            padding: 15px 0;
-        }
+      .article {
+        grid-column: 2;
+        grid-row: 2;
+        min-width: 0;
+      }
+    }
 
-        .nav-links {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
+    @media (max-width: 899px) {
+      .page {
+        display: flex;
+        flex-direction: column;
+        padding-top: 12px;
+      }
 
-        .nav-link {
-            font-family: 'Oswald', sans-serif;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--val-gray);
-            cursor: pointer;
-            padding: 8px 15px;
-            border-radius: 4px;
-            transition: all 0.2s;
-            text-decoration: none;
-        }
+      .doc-nav {
+        order: 2;
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        margin: 0 -16px 16px;
+        padding-left: 16px;
+        padding-right: 16px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        background: linear-gradient(180deg, rgba(26, 27, 31, 0.97) 0%, rgba(26, 27, 31, 0.92) 85%, transparent 100%);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border-bottom: 1px solid rgba(0, 219, 104, 0.15);
+      }
 
-        .nav-link:hover {
-            color: var(--val-white);
-            background: rgba(255, 70, 85, 0.2);
-        }
+      .hero { order: 1; }
+      .article { order: 3; }
+    }
 
-        .nav-link.active {
-            color: var(--val-white);
-            background: var(--val-red);
-        }
+    header.hero {
+      text-align: center;
+      padding: 28px 16px 24px;
+      margin-bottom: 8px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: linear-gradient(165deg, var(--surface) 0%, rgba(41, 46, 50, 0.6) 100%);
+    }
 
-        /* 主内容区 */
-        .main-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
+    header.hero h1 {
+      margin: 0 0 10px;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
 
-        /* 章节区域 */
-        .section {
-            margin-bottom: 60px;
-            scroll-margin-top: 100px;
-        }
+    header.hero .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid var(--border);
+    }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+    header.hero p {
+      margin: 12px 0 0;
+      color: var(--text-muted);
+      font-size: 13px;
+      max-width: 52em;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
-        h2 {
-            font-family: 'Oswald', sans-serif;
-            font-size: 2.5rem;
-            text-transform: uppercase;
-            margin-bottom: 5px;
-            display: inline-block;
-            color: var(--val-white);
-        }
+    .doc-nav {
+      background: rgba(32, 36, 40, 0.75);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.055);
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 8px 24px rgba(0, 0, 0, 0.22);
+      font-size: 14px;
+    }
 
-        .subtitle {
-            font-family: 'Share Tech Mono', monospace;
-            color: var(--val-red);
-            font-size: 0.9rem;
-            margin-bottom: 30px;
-            display: block;
-            border-bottom: 1px solid rgba(255, 70, 85, 0.3);
-            padding-bottom: 10px;
-        }
+    .doc-nav strong {
+      display: block;
+      margin-bottom: 10px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      color: rgba(180, 188, 196, 0.95);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+    }
 
-        .info-box {
-            background: rgba(236, 232, 225, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 25px;
-            margin-bottom: 20px;
-            position: relative;
-            backdrop-filter: blur(5px);
-        }
+    .doc-nav ol {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
 
-        .info-box::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: var(--val-gray);
-            transition: 0.3s;
-        }
+    .doc-nav li {
+      margin: 0;
+    }
 
-        .info-box:hover::before {
-            background: var(--val-red);
-        }
+    .doc-nav a {
+      display: block;
+      width: 100%;
+      padding: 10px 12px;
+      margin: 1px 0;
+      border-radius: 8px;
+      font-size: 13px;
+      line-height: 1.55;
+      letter-spacing: 0.01em;
+      color: var(--nav-text);
+      text-decoration: none;
+      border: none;
+      background: transparent;
+      transition: color 0.18s ease, background 0.18s ease;
+    }
 
-        .info-box h3 {
-            font-family: 'Oswald', sans-serif;
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            color: var(--val-white);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+    .doc-nav a .path {
+      color: inherit;
+      opacity: 0.88;
+    }
 
-        .info-box h3 .icon {
-            font-size: 1.5rem;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255, 70, 85, 0.2);
-            border-radius: 6px;
-            flex-shrink: 0;
-        }
+    .doc-nav a:hover {
+      color: rgba(230, 236, 241, 0.96);
+      background: var(--nav-hover-bg);
+      text-decoration: none;
+    }
 
-        .info-box p, .info-box li {
-            color: #b5b5b5;
-            line-height: 1.6;
-            margin-bottom: 8px;
-            font-size: 0.95rem;
-        }
+    .doc-nav a.is-active {
+      color: var(--nav-active-text);
+      font-weight: 500;
+      background: var(--nav-active-bg);
+    }
 
-        ul {
-            list-style: none;
-        }
+    .doc-nav a.is-active .path {
+      color: inherit;
+      opacity: 0.95;
+    }
 
-        ul li {
-            position: relative;
-            padding-left: 20px;
-        }
+    @media (min-width: 900px) {
+      .doc-nav {
+        position: sticky;
+        top: 20px;
+        max-height: calc(100vh - 40px);
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 18px 14px 20px;
+        margin-bottom: 0;
+      }
 
-        ul li::before {
-            content: '>';
-            position: absolute;
-            left: 0;
-            color: var(--val-red);
-            font-family: 'Share Tech Mono', monospace;
-            font-weight: bold;
-        }
+      .doc-nav::-webkit-scrollbar {
+        width: 6px;
+      }
+      .doc-nav::-webkit-scrollbar-thumb {
+        background: rgba(0, 219, 104, 0.25);
+        border-radius: 3px;
+      }
+    }
 
-        ol {
-            list-style: none;
-            counter-reset: step-counter;
-        }
+    @media (max-width: 899px) {
+      .doc-nav {
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+        border-top: none;
+        padding: 12px 0 12px;
+        background: linear-gradient(180deg, rgba(22, 24, 28, 0.98) 0%, rgba(26, 27, 31, 0.96) 100%);
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+        border-bottom: 1px solid rgba(0, 219, 104, 0.12);
+      }
 
-        ol li {
-            position: relative;
-            padding-left: 30px;
-            counter-increment: step-counter;
-            margin-bottom: 10px;
-        }
+      .doc-nav strong {
+        display: none;
+      }
 
-        ol li::before {
-            content: counter(step-counter);
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 24px;
-            height: 24px;
-            background: var(--val-red);
-            color: var(--val-white);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.85rem;
-            font-weight: bold;
-            font-family: 'Oswald', sans-serif;
-        }
+      .doc-nav .doc-nav-inner {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 0;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 4px 0 6px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(0, 219, 104, 0.35) transparent;
+      }
 
-        .info-box code {
-            background: rgba(255, 70, 85, 0.2);
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.9em;
-            color: var(--val-red);
-        }
+      .doc-nav .doc-nav-inner::-webkit-scrollbar {
+        height: 3px;
+      }
+      .doc-nav .doc-nav-inner::-webkit-scrollbar-thumb {
+        background: rgba(0, 219, 104, 0.35);
+        border-radius: 2px;
+      }
 
-        /* 快速检查清单网格布局 */
-        .checklist-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
+      .doc-nav ol {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 8px;
+        padding: 0 2px;
+      }
 
+      .doc-nav li {
+        flex: 0 0 auto;
+      }
 
-        /* 移动端适配 */
-        @media (max-width: 768px) {
-            .top-nav {
-                padding: 0 10px;
-            }
+      .doc-nav a {
+        width: auto;
+        margin: 0;
+        padding: 8px 14px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 1.45;
+        color: var(--nav-text-dim);
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        white-space: nowrap;
+        max-width: 15em;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
 
-            .nav-container {
-                flex-direction: column;
-                gap: 15px;
-                padding: 10px 0;
-            }
+      .doc-nav a:hover {
+        color: var(--nav-text);
+        background: rgba(255, 255, 255, 0.07);
+        border-color: rgba(255, 255, 255, 0.1);
+      }
 
-            .nav-links {
-                width: 100%;
-                justify-content: center;
-                gap: 10px;
-            }
+      .doc-nav a.is-active {
+        color: var(--nav-active-text);
+        font-weight: 500;
+        background: rgba(0, 219, 104, 0.09);
+        border-color: rgba(45, 212, 138, 0.2);
+      }
+    }
 
-            .nav-link {
-                font-size: 0.8rem;
-                padding: 6px 12px;
-            }
+    section { margin-top: 32px; }
 
-            .main-content {
-                padding: 20px 15px;
-            }
+    .article > section:first-child {
+      margin-top: 0;
+    }
 
-            h2 {
-                font-size: 2rem;
-            }
+    h2 {
+      margin: 0 0 12px;
+      font-size: 1.2rem;
+      color: var(--text);
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
 
-            .status-indicators {
-                display: none;
-            }
+    h3 {
+      margin: 22px 0 10px;
+      font-size: 1.02rem;
+      color: var(--text);
+    }
 
-            .checklist-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    h4 {
+      margin: 16px 0 8px;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    p, li { color: var(--text-muted); }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin: 10px 0;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .note {
+      font-size: 13px;
+      color: var(--text-hint);
+      border-left: 3px solid var(--accent);
+      padding: 8px 0 8px 12px;
+      margin: 12px 0;
+      background: rgba(0, 219, 104, 0.06);
+      border-radius: 0 8px 8px 0;
+    }
+
+    .warn {
+      font-size: 13px;
+      color: var(--warn);
+      border-left: 3px solid var(--warn);
+      padding: 8px 0 8px 12px;
+      margin: 12px 0;
+      background: rgba(255, 183, 77, 0.08);
+      border-radius: 0 8px 8px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin: 12px 0;
+    }
+
+    th, td {
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: rgba(41, 46, 50, 0.9);
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    td:first-child { white-space: nowrap; color: var(--text); }
+
+    code, .path {
+      font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+      font-size: 12px;
+      color: #b8e6cc;
+      word-break: break-all;
+    }
+
+    ul.bullets, ol.steps {
+      padding-left: 1.25em;
+    }
+
+    ul.bullets li, ol.steps li { margin: 7px 0; }
+
+    footer {
+      margin-top: 48px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-hint);
+    }
+  </style>
 </head>
 <body>
-    <div class="bg-grid"></div>
+  <div class="page">
+    <header class="hero">
+      <h1>辅助瞄准助手</h1>
+      <span class="badge">详细使用教程</span>
+      <p>下文按当前工程实现整理：登录与校验、离线资源包、无线配对、在线/本地模型、主界面模型信息与 <span class="path">config.json</span> 高级参数、悬浮窗一级/二级菜单及交互说明。若你使用的发行包修改了文案或关闭部分功能，以实际界面为准。</p>
+    </header>
 
-    <div class="top-bar">
-        <div class="logo">YOLO5 <span>ASSISTANT</span></div>
-        <div class="status-indicators">
-            <div class="status-item">SYSTEM: ONLINE</div>
-            <div class="status-item">PROTOCOL: V2</div>
-            <div class="status-item">STATUS: READY</div>
-        </div>
-    </div>
+    <nav class="doc-nav" aria-label="文档目录">
+      <div class="doc-nav-inner">
+        <strong>目录</strong>
+        <ol>
+          <li><a href="#login">登录与初始化</a></li>
+          <li><a href="#resource-pack">资源包：下载、校验与手动导入</a></li>
+          <li><a href="#main-tabs">主界面底部导航</a></li>
+          <li><a href="#model-tab">模型页：本地与在线模型</a></li>
+          <li><a href="#model-sheet">主界面「模型参数配置」说明</a></li>
+          <li><a href="#config-json"><span class="path">config.json</span> 与模型高级参数</a></li>
+          <li><a href="#adb-pair">ADB 与无线配对</a></li>
+          <li><a href="#overlay-l1">悬浮窗一级菜单（点击 / 长按）</a></li>
+          <li><a href="#overlay-l2">二级配置面板（各菜单子项）</a></li>
+          <li><a href="#caveats">注意事项与常见问题</a></li>
+        </ol>
+      </div>
+    </nav>
 
-    <div class="top-nav">
-        <div class="nav-container">
-            <div class="nav-links">
-                <a href="#tutorial" class="nav-link active">新手引导</a>
-                <a href="#pairing" class="nav-link">激活配对</a>
-                <a href="#launch" class="nav-link">启动与模型</a>
-                <a href="#menu_basic" class="nav-link">菜单功能</a>
-                <a href="#aim_config" class="nav-link">自瞄设置</a>
-                <a href="#trigger_config" class="nav-link">扳机配置</a>
-                <a href="#advanced" class="nav-link">其他参数</a>
-                <a href="#main_interface" class="nav-link">主界面功能</a>
-            </div>
-        </div>
-    </div>
+    <main class="article">
+    <section id="login">
+      <h2>一、登录与初始化</h2>
+      <ol class="steps">
+        <li>启动应用后进入登录页，输入<strong>卡密</strong>完成在线校验（见 <code>LoginActivity</code>）。若本地已有上次登录信息，可能显示「正在初始化验证…」并自动尝试登录。</li>
+        <li>校验通过前无法使用需联网授权的功能；网络异常时请稍后重试或检查卡密是否有效。</li>
+      </ol>
+      <div class="note">登录通过后进入主界面（<code>MainActivity</code>），底部为四个 Tab：ADB、模型、外设、教程。</div>
+    </section>
 
-    <div class="main-content">
-            
-        <!-- 新手引导 -->
-        <section id="tutorial" class="section">
-                <h2>📚 新手引导流程</h2>
-                <span class="subtitle">STEP-BY-STEP GUIDE // NEW USER TUTORIAL</span>
+    <section id="resource-pack">
+      <h2>二、资源包：下载、校验与手动导入</h2>
+      <p>大型 <code>assets</code> / <code>jniLibs</code> 可从 APK 中拆出，通过云端清单分项下载或手动导入，由 <code>OfflineResourceManager</code> 管理。</p>
 
-                <div class="info-box">
-                    <h3><span class="icon">📋</span>前置条件 (Prerequisites)</h3>
-                    <ul>
-                        <li><strong>硬件要求:</strong> 搭载了骁龙或者天玑处理器的安卓手机 x 1。</li>
-                        <li><strong>软件准备:</strong> 辅助瞄准助手 APK 安装包（以下通称"助手"）。</li>
-                        <li><strong>核心要素:</strong> 一个聪明的人。</li>
-                    </ul>
-                </div>
+      <h3>2.1 校验顺序与前置条件</h3>
+      <ul class="bullets">
+        <li>须先成功获取 <strong>cpu.json</strong>（设备/芯片信息相关清单入口）。</li>
+        <li>若工程内配置了远程资源清单 URL，还须成功获取 <strong>resources.json</strong>，再与本地对比缺失项。</li>
+        <li>界面文案说明：「须先成功获取 cpu.json；若已配置远程资源清单 URL，还须成功获取 resources.json，之后才会校验并下载资源包。」</li>
+      </ul>
 
-                <div class="info-box">
-                    <h3><span class="icon">📱</span>第一步：安装应用 (Installation)</h3>
-                    <ul>
-                        <li>手机打开文件管理找到助手 APK 安装包。</li>
-                        <li>点击 APK 安装包进行安装，如果提示风险请无视风险安装。</li>
-                        <li>安装完成后，点击助手 APP 图标打开应用。</li>
-                    </ul>
-                </div>
+      <h3>2.2 界面状态说明</h3>
+      <ul class="bullets">
+        <li><strong>正在校验资源包…</strong>：正在校验 cpu.json / 远程清单 / 本地缺口，尚未进入分项下载进度。</li>
+        <li><strong>正在加载清单</strong>：清单加载中。</li>
+        <li><strong>清单与缺口</strong>：若远程清单暂未就绪，可能「暂按内置项校验」，成功加载 <code>resources.json</code> 后会追加本机 HTP Skel/Stub 等项。</li>
+        <li><strong>分项下载</strong>：多文件并行下载（并发上限 5）；列表中可见「下载中 / 等待下载 / 已存在 / 下载完成」等状态及字节大小。</li>
+        <li><strong>停止下载</strong>：用户停止后未完成的项标记为「未下载·已暂停」，可再次「开始下载」或「重试」。</li>
+        <li>远程清单在应用私有目录中有缓存，超过约 <strong>24 小时</strong> 后下次启动会重新请求。</li>
+      </ul>
 
-                <div class="info-box">
-                    <h3><span class="icon">🔐</span>第二步：权限授权 (Permission Authorization)</h3>
-                    <p><strong>目标：</strong>确保所有 5 个权限图标都显示为绿色（已授权状态）</p>
-                    
-                    <div style="margin: 15px 0; padding: 15px; background: rgba(255, 70, 85, 0.1); border-left: 3px solid var(--val-red);">
-                        <strong style="color: var(--val-red);">权限状态说明：</strong>
-                        <ul style="margin-top: 10px;">
-                            <li>🟢 <strong>绿色图标</strong> = 权限已授权 ✓</li>
-                            <li>🔴 <strong>红色图标</strong> = 权限未授权 ✗</li>
-                        </ul>
-                    </div>
+      <h3>2.3 手动导入 <span class="path">.xxg</span></h3>
+      <p>「手动导入」会选择文件：实为 <strong>zip</strong> 包，扩展名为 <code>.xxg</code>，根目录需包含 <span class="path">assets/</span> 与 <span class="path">jniLibs/</span>。导入过程在后台线程执行，完成后会刷新资源状态。</p>
 
-                    <p><strong>操作步骤：</strong></p>
-                    <ol style="margin-left: 20px; color: #b5b5b5;">
-                        <li style="margin-bottom: 10px;">首次打开 APP 时，系统会自动弹出权限申请窗口，<strong>全部点击"允许"</strong>。</li>
-                        <li style="margin-bottom: 10px;">进入主界面后，查看顶部"APP权限状态"区域的 5 个权限图标：
-                            <br>• <strong>文件访问</strong> - 需要文件读写权限
-                            <br>• <strong>悬浮窗</strong> - 需要悬浮窗显示权限
-                            <br>• <strong>无线调试</strong> - 需要无线调试权限（稍后配对）
-                            <br>• <strong>截屏</strong> - 需要屏幕录制权限
-                            <br>• <strong>触摸</strong> - 需要模拟触摸权限（稍后激活）
-                        </li>
-                        <li style="margin-bottom: 10px;">如果有红色图标，点击右上角的<strong>"点击授权"</strong>按钮。</li>
-                        <li style="margin-bottom: 10px;">系统会弹出权限设置页面，按照提示完成授权：
-                            <br>• <strong>文件访问权限：</strong> 在设置中找到"所有文件访问权限"，开启
-                            <br>• <strong>悬浮窗权限：</strong> 在设置中找到"显示在其他应用的上层"，开启
-                            <br>• <strong>截屏权限：</strong> 会弹出"允许辅助瞄准助手录制或投射内容？"，<strong>必须点击"立即开始"</strong>（会弹出 2 次，都要允许）
-                        </li>
-                        <li style="margin-bottom: 10px;">授权完成后返回 APP，确认所有权限图标都变成绿色。</li>
-                        <li style="margin-bottom: 10px;">如果仍有红色图标，重复步骤 3-5，直到全部变绿。</li>
-                    </ol>
+      <h3>2.4 与「模型」页的关系</h3>
+      <p>仅当资源包就绪（代码中 <code>offlineResourceReadyForModels</code>）后，「模型」页才会显示<strong>添加本地模型</strong>与本地模型列表。否则会提示先完成资源包；若 Tab 切换时资源未就绪，可能 Toast「资源包还没加载完成」。</p>
 
-                    <div style="margin-top: 15px; padding: 12px; background: rgba(243, 194, 88, 0.1); border-left: 3px solid #f3c258;">
-                        <strong style="color: #f3c258;">⚠️ 重要提示：</strong>
-                        <ul style="margin-top: 8px;">
-                            <li>截屏权限会弹出 2 次，<strong>两次都必须点击"立即开始"</strong>，否则无法正常使用。</li>
-                            <li>如果权限授权失败，可以退出 APP 重新打开，或手动进入系统设置中开启对应权限。</li>
-                        </ul>
-                    </div>
-                </div>
+      <div class="warn">若未在 <code>OfflineResourceConstants</code> 中配置 <code>REMOTE_MANIFEST_URL</code> 或 <code>BUNDLE_URL</code>，在线下载入口会提示需先配置地址。</div>
+    </section>
 
-                <div class="info-box">
-                    <h3><span class="icon">📡</span>第三步：无线配对 (Wireless Pairing)</h3>
-                    <p><strong>目标：</strong>完成无线调试配对，使"无线调试"权限图标变绿</p>
-                    
-                    <p><strong>操作步骤：</strong></p>
-                    <ol style="margin-left: 20px; color: #b5b5b5;">
-                        <li style="margin-bottom: 10px;">确认"文件访问"和"悬浮窗"权限已授权（绿色图标）。</li>
-                        <li style="margin-bottom: 10px;">打开手机的<strong>【设置】→【关于手机】</strong>，连续点击 7 次"版本号"开启开发者模式。</li>
-                        <li style="margin-bottom: 10px;">返回设置，找到<strong>【开发者选项】</strong>并进入。</li>
-                        <li style="margin-bottom: 10px;">在开发者选项中，找到并开启<strong>【无线调试】</strong>开关。</li>
-                        <li style="margin-bottom: 10px;">点击<strong>【无线调试】</strong>选项进入详情页。</li>
-                        <li style="margin-bottom: 10px;">点击<strong>【使用配对码配对设备】</strong>，系统会弹出配对码和端口号。
-                            <div style="margin: 10px 0; padding: 10px; background: rgba(255, 70, 85, 0.1); border-left: 3px solid var(--val-red);">
-                                <strong style="color: var(--val-red);">⚠️ 关键提示：</strong>
-                                <ul style="margin-top: 8px;">
-                                    <li>配对码是 6 位数字</li>
-                                    <li>端口号是 5 位数字</li>
-                                    <li><strong>必须记住弹窗里显示的端口和配对码</strong>，不要记无线调试页面列表里的端口</li>
-                                    <li>弹窗可能会自动关闭，建议使用小窗或分屏操作，防止切后台导致端口号刷新</li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li style="margin-bottom: 10px;">在助手 APP 中，点击<strong>"无线激活"</strong>按钮。</li>
-                        <li style="margin-bottom: 10px;">选择配对方式：
-                            <br><strong>方式 A（推荐）：</strong> 点击"配对码"，等待通知栏弹出配对码输入框，输入 6 位配对码后点击纸飞机提交
-                            <br><strong>方式 B：</strong> 点击"端口&配对码"，手动输入格式：<code>端口-配对码</code>（例如：12345-123456）
-                        </li>
-                        <li style="margin-bottom: 10px;">配对成功后，系统弹窗会自动关闭，无线调试页面下方会多出一个已配对设备。</li>
-                        <li style="margin-bottom: 10px;">返回助手 APP，确认"无线调试"权限图标已变成绿色。</li>
-                    </ol>
+    <section id="main-tabs">
+      <h2>三、主界面底部导航</h2>
+      <table>
+        <thead>
+          <tr><th>Tab</th><th>说明</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>ADB</td><td>本机 ADB 可执行、设备连接、触摸服务状态、无线配对入口与日志等（具体以界面为准）。</td></tr>
+          <tr><td>模型</td><td>资源包卡片、添加本地模型、已下载模型列表、在线模型列表、启动/停止屏幕识别与推理服务。</td></tr>
+          <tr><td>外设</td><td>手柄等外设管理与映射相关能力。</td></tr>
+          <tr><td>教程</td><td>应用内教程（可配置远程教程列表 URL，由 WebView 展示）。</td></tr>
+        </tbody>
+      </table>
+    </section>
 
-                    <div style="margin-top: 15px; padding: 12px; background: rgba(243, 194, 88, 0.1); border-left: 3px solid #f3c258;">
-                        <strong style="color: #f3c258;">💡 其他激活方式：</strong>
-                        <ul style="margin-top: 8px;">
-                            <li>如果使用电脑激活，在电脑上执行命令：<code>adb tcpip 5555</code></li>
-                            <li>如果使用 Root/Shizuku/黑域，也需要执行：<code>adb tcpip 5555</code></li>
-                            <li>点击"其他激活"按钮可查看详细说明</li>
-                        </ul>
-                    </div>
-                </div>
+    <section id="model-tab">
+      <h2>四、模型页：本地与在线模型</h2>
 
-                <div class="info-box">
-                    <h3><span class="icon">👆</span>第四步：触摸服务激活 (Touch Service Activation)</h3>
-                    <p><strong>目标：</strong>完成触摸服务初始化，使"触摸"权限图标变绿</p>
-                    
-                    <p><strong>操作步骤：</strong></p>
-                    <ol style="margin-left: 20px; color: #b5b5b5;">
-                        <li style="margin-bottom: 10px;">确认"无线调试"权限图标已变绿（配对成功）。</li>
-                        <li style="margin-bottom: 10px;">在助手 APP 主界面，查看"触摸设备"区域，确认选择了<strong>"ADB触摸"</strong>（默认选项）。</li>
-                        <li style="margin-bottom: 10px;">查看"adb连接状态"文字提示，等待显示<strong>"触摸初始化完成"</strong>（绿色文字）。</li>
-                        <li style="margin-bottom: 10px;">在等待过程中，系统可能会弹出 2 次"是否要授权 USB 调用"的提示，<strong>全部点击"允许"</strong>。</li>
-                        <li style="margin-bottom: 10px;">等待约 10 秒左右，直到看到绿色的"触摸初始化完成"提示。</li>
-                        <li style="margin-bottom: 10px;">点击<strong>"测试滑动"</strong>按钮，如果系统自动下拉通知栏，说明触摸功能正常。</li>
-                        <li style="margin-bottom: 10px;">确认"触摸"权限图标已变成绿色。</li>
-                    </ol>
+      <h3>4.1 添加本地模型</h3>
+      <p>点击<strong>添加本地模型</strong>，通过系统文件选择器选择 <code>.onnx</code> 文件；文件会纳入应用管理的模型目录（与 <code>XXGAIConfig.MODEL_DIR</code> 一致，默认 <span class="path">/sdcard/.xxgai/model</span>）。</p>
 
-                    <div style="margin-top: 15px; padding: 12px; background: rgba(255, 70, 85, 0.1); border-left: 3px solid var(--val-red);">
-                        <strong style="color: var(--val-red);">⚠️ 故障排查：</strong>
-                        <ul style="margin-top: 8px;">
-                            <li>如果触摸初始化失败，检查无线调试是否已配对成功</li>
-                            <li>如果"测试滑动"无反应，尝试退出 APP 重新打开</li>
-                            <li>如果"触摸"图标一直是红色，检查是否所有权限都已授权</li>
-                        </ul>
-                    </div>
-                </div>
+      <h3>4.2 本地模型卡片操作</h3>
+      <ul class="bullets">
+        <li><strong>点击卡片主体</strong>：打开底部弹窗「<strong>模型参数配置</strong>」（见下一节），编辑展示名称、精度、类名、关联应用等。</li>
+        <li><strong>向左滑动卡片</strong>：露出右侧「删除」区域，滑到足够位置后点击红色区域可删除该本地模型。</li>
+        <li><strong>启动 / 停止</strong>：卡片右侧按钮。若当前模型已激活且识别运行中，显示「停止」；否则为「启动」。短时间去重（约 200ms）防连点。启动时会激活该模型并走开始屏幕识别流程（需已授权录屏、悬浮窗等）。</li>
+      </ul>
 
-                <div class="info-box">
-                    <h3><span class="icon">🤖</span>第五步：导入模型（可选）(Model Import - Optional)</h3>
-                    <p><strong>说明：</strong>如果使用"找色"模式，可以跳过此步骤。如果使用 YOLO V5 或 V8，需要导入模型。</p>
-                    
-                    <p><strong>操作步骤：</strong></p>
-                    <ol style="margin-left: 20px; color: #b5b5b5;">
-                        <li style="margin-bottom: 10px;">在助手 APP 主界面顶部，选择推理框架：
-                            <br>• <strong>V5</strong> - 使用 YOLO V5 模型
-                            <br>• <strong>V8</strong> - 使用 YOLO V8 模型
-                            <br>• <strong>找色</strong> - 使用颜色识别（无需模型）
-                        </li>
-                        <li style="margin-bottom: 10px;">如果选择了 V5 或 V8，点击<strong>"添加模型"</strong>按钮。</li>
-                        <li style="margin-bottom: 10px;">选择模型 zip 压缩包（包含 .bin、.param、.class 三个文件）。</li>
-                        <li style="margin-bottom: 10px;">等待模型导入完成，模型会显示在列表中。</li>
-                        <li style="margin-bottom: 10px;">点击模型列表中的模型名称选择要使用的模型。</li>
-                    </ol>
-                </div>
+      <h3>4.3 在线模型</h3>
+      <p>列表由远程配置拉取；加载中显示「正在加载在线模型」。失败或为空时提示「在线模型加载失败」或「暂无在线模型」。</p>
+      <p>单张卡片上点击<strong>下载</strong>：按 URL 下载到模型目录；若文件已存在且非空则跳过网络直接视为完成。下载完成后会尝试拉取封面图标并写入该模型的手动配置。</p>
+      <p>已与本地文件名（不区分大小写）相同的在线项<strong>不再显示</strong>在在线列表中，避免重复下载。</p>
+    </section>
 
-                <div class="info-box">
-                    <h3><span class="icon">🚀</span>第六步：输入卡密并启动 (Enter License & Start)</h3>
-                    <p><strong>目标：</strong>输入卡密，点击"开始"按钮启动辅助功能</p>
-                    
-                    <p><strong>操作步骤：</strong></p>
-                    <ol style="margin-left: 20px; color: #b5b5b5;">
-                        <li style="margin-bottom: 10px;">确认所有 5 个权限图标都是绿色：
-                            <br>✓ 文件访问 ✓ 悬浮窗 ✓ 无线调试 ✓ 截屏 ✓ 触摸
-                        </li>
-                        <li style="margin-bottom: 10px;">如果使用 YOLO 模型，确认已导入并选择了模型。</li>
-                        <li style="margin-bottom: 10px;">在底部"登录卡密"输入框中，输入你的卡密（如果已保存会自动填充）。</li>
-                        <li style="margin-bottom: 10px;">点击<strong>"开始"</strong>按钮。</li>
-                        <li style="margin-bottom: 10px;">系统会再次弹出截屏权限确认（如果之前未完全授权），<strong>点击"立即开始"</strong>。</li>
-                        <li style="margin-bottom: 10px;">启动成功后，左上角会出现悬浮图标，表示辅助功能已启动。</li>
-                        <li style="margin-bottom: 10px;">进入游戏后，悬浮图标会自动移动到右边，点击图标可以打开设置菜单。</li>
-                    </ol>
+    <section id="model-sheet">
+      <h2>五、主界面「模型参数配置」说明</h2>
+      <p>对应数据结构 <code>XXGAIConfig.ModelManualConfig</code>，用于列表展示与启动关联应用，与悬浮层推理参数（<code>ModelOverlayConfig</code>）分开存储。</p>
+      <table>
+        <thead>
+          <tr><th>字段</th><th>含义与注意</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>模型名称</td><td>列表中显示名称，默认可与文件名相关。</td></tr>
+          <tr><td>输入尺寸</td><td>展示用；保存时若填写则须为 <strong>32 的倍数</strong>，否则会 Toast「输入尺寸必须是32的倍数」并无法保存。</td></tr>
+          <tr><td>显示图标</td><td>可从文件选择图片；也可使用资源名或模型目录下图标文件（与图标解析逻辑一致）。</td></tr>
+          <tr><td>模型精度</td><td>展示标签（如 FP16），供卡片详情行展示。</td></tr>
+          <tr><td>游戏类型</td><td>如 FPS / MOBA 等，影响卡片角标颜色与展示。</td></tr>
+          <tr><td>关联应用</td><td>选择本机已安装应用（包名 + 名称）；若授予「查询所有应用」类权限，列表更完整。</td></tr>
+          <tr><td>启动应用</td><td>开关：为开且已选关联应用时，从模型页「启动」识别流程中可自动打开该应用（见代码中 <code>autoOpenApp</code>）。</td></tr>
+          <tr><td>识别类名</td><td>多行类名，用于界面展示与悬浮层「识别目标」等；与模型输出类别对应时需与训练标注一致。</td></tr>
+        </tbody>
+      </table>
+      <p>底部<strong>确定</strong>写入配置；<strong>取消</strong>关闭不保存。</p>
+    </section>
 
-                    <div style="margin-top: 15px; padding: 12px; background: rgba(76, 175, 80, 0.1); border-left: 3px solid #4caf50;">
-                        <strong style="color: #4caf50;">✅ 启动成功标志：</strong>
-                        <ul style="margin-top: 8px;">
-                            <li>左上角出现悬浮图标</li>
-                            <li>进入游戏后图标自动移动到右边</li>
-                            <li>点击图标可以打开设置菜单</li>
-                        </ul>
-                    </div>
-                </div>
+    <section id="config-json">
+      <h2>六、<span class="path">config.json</span> 与模型高级参数</h2>
+      <p>根目录默认 <span class="path">/sdcard/.xxgai/config.json</span>。模型元数据键为 <code>modelManualConfigs</code>；悬浮窗/推理相关键为 <code>modelOverlayConfigs</code>，键均为<strong>归一化后的模型文件绝对路径</strong>（避免同一路径不同写法导致配置分裂）。</p>
 
-                <div class="info-box">
-                    <h3><span class="icon">✅</span>快速检查清单 (Quick Checklist)</h3>
-                    <p>在点击"开始"之前，请确认以下所有项目都已完成：</p>
-                    
-                    <div style="margin-top: 15px; padding: 15px; background: rgba(0, 0, 0, 0.2); border-radius: 5px;">
-                        <div class="checklist-grid">
-                            <div style="padding: 10px; background: rgba(255, 255, 255, 0.05); border-left: 3px solid var(--val-red);">
-                                <strong>✓ 权限授权检查：</strong>
-                                <ul style="margin-top: 5px; margin-left: 20px;">
-                                    <li>文件访问权限图标 = 🟢 绿色</li>
-                                    <li>悬浮窗权限图标 = 🟢 绿色</li>
-                                    <li>无线调试权限图标 = 🟢 绿色</li>
-                                    <li>截屏权限图标 = 🟢 绿色</li>
-                                    <li>触摸权限图标 = 🟢 绿色</li>
-                                </ul>
-                            </div>
-                            
-                            <div style="padding: 10px; background: rgba(255, 255, 255, 0.05); border-left: 3px solid var(--val-red);">
-                                <strong>✓ 无线配对检查：</strong>
-                                <ul style="margin-top: 5px; margin-left: 20px;">
-                                    <li>已开启开发者选项</li>
-                                    <li>已开启无线调试</li>
-                                    <li>已成功配对（无线调试图标变绿）</li>
-                                    <li>adb连接状态显示"触摸初始化完成"</li>
-                                </ul>
-                            </div>
-                            
-                            <div style="padding: 10px; background: rgba(255, 255, 255, 0.05); border-left: 3px solid var(--val-red);">
-                                <strong>✓ 触摸服务检查：</strong>
-                                <ul style="margin-top: 5px; margin-left: 20px;">
-                                    <li>触摸权限图标 = 🟢 绿色</li>
-                                    <li>"测试滑动"功能正常（能下拉通知栏）</li>
-                                </ul>
-                            </div>
-                            
-                            <div style="padding: 10px; background: rgba(255, 255, 255, 0.05); border-left: 3px solid var(--val-red);">
-                                <strong>✓ 模型检查（如使用 YOLO）：</strong>
-                                <ul style="margin-top: 5px; margin-left: 20px;">
-                                    <li>已导入模型 zip 文件</li>
-                                    <li>模型列表中已选择要使用的模型</li>
-                                </ul>
-                            </div>
-                            
-                            <div style="padding: 10px; background: rgba(255, 255, 255, 0.05); border-left: 3px solid var(--val-red);">
-                                <strong>✓ 卡密检查：</strong>
-                                <ul style="margin-top: 5px; margin-left: 20px;">
-                                    <li>已输入有效的卡密</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+      <h3>6.1 推理与 ONNX（<code>ModelOverlayConfig</code>）</h3>
+      <p>下列项多数可在悬浮窗「模型参数」二级面板中调整一部分；其余需直接编辑 JSON 或在后续版本 UI 中暴露。</p>
+      <table>
+        <thead>
+          <tr><th>字段/概念</th><th>说明</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>modelInputSize</code></td><td>模型输入空间尺寸（如 640）；与 letterbox 缩放相关。</td></tr>
+          <tr><td><code>onnxInputLayout</code></td><td><code>AUTO</code> / <code>NCHW</code> / <code>NHWC</code>。推断错误时请手动指定。</td></tr>
+          <tr><td><code>onnxInputChannelOrder</code></td><td><code>RGB</code> 或 <code>BGR</code>（常见于 OpenCV 导出）。</td></tr>
+          <tr><td><code>onnxOutputName</code></td><td>检测头输出节点名；多输出模型务必填写，避免误用非检测张量。</td></tr>
+          <tr><td><code>onnxOutputLayout</code></td><td><code>AUTO</code> / <code>NC</code>(ROWS) / <code>CN</code>(CHANNELS) 等，描述 rank-3 检测输出语义。</td></tr>
+          <tr><td><code>onnxYoloVariant</code></td><td><code>AUTO</code> / <code>V5</code> / <code>V8</code> 等，对应 YOLO 检测头列语义。</td></tr>
+          <tr><td><code>captureMaxLongEdgePx</code></td><td>截屏/VirtualDisplay 输出长边上限（像素），0 表示不主动限制；大屏可降到 1280～1600 减轻每帧拷贝。修改后常在收起一级菜单时重建抓图链路。</td></tr>
+          <tr><td><code>inferenceMinIntervalMs</code></td><td>连续两次调度推理的最小间隔（1～5000 ms）。</td></tr>
+          <tr><td><code>maxDetections</code></td><td>后处理保留的最大检测数（上限与 UI 滑块一致部分为 1～10 档）。</td></tr>
+          <tr><td><code>inferenceConfidence</code></td><td>置信度阈值（0.10～1.00）。</td></tr>
+          <tr><td><code>inferenceNmsIou</code></td><td>NMS IoU（0.01～1.00）。</td></tr>
+          <tr><td><code>qnnAccelerationEnabled</code></td><td>高通 QNN 偏好开关；非高通或会话侧会忽略；缺库时可关。</td></tr>
+          <tr><td><code>nnapiAccelerationEnabled</code></td><td>NNAPI 加速开关。</td></tr>
+        </tbody>
+      </table>
 
-                    <div style="margin-top: 15px; padding: 12px; background: rgba(255, 70, 85, 0.1); border-left: 3px solid var(--val-red);">
-                        <strong style="color: var(--val-red);">⚠️ 如果"开始"按钮无法点击：</strong>
-                        <ul style="margin-top: 8px;">
-                            <li>检查是否有权限图标是红色（未授权）</li>
-                            <li>检查无线调试是否已配对成功</li>
-                            <li>检查触摸服务是否已初始化完成</li>
-                            <li>检查是否已输入卡密</li>
-                            <li>如果使用 YOLO 模型，检查是否已导入模型</li>
-                        </ul>
-                    </div>
-                </div>
+      <h3>6.2 画框与识别范围</h3>
+      <ul class="bullets">
+        <li><code>boxStyleIndex</code>、<code>boxColorValue</code>、<code>boxLineWidthIndex</code>、<code>showClassNameEnabled</code>、<code>showConfidenceEnabled</code></li>
+        <li><code>recognitionRangePx</code>、<code>recognitionRangeVisible</code>、<code>recognitionRangeFilterEnabled</code>、<code>recognitionRangeHideBorder</code> 等：中央识别区范围、是否仅保留范围内检测、是否绘制边线。</li>
+      </ul>
 
-            </div>
+      <h3>6.3 自动瞄准 / 压枪 / 扳机（存于同一配置）</h3>
+      <p>包含 PID 参数（<code>autoAimPid*</code>）、触摸区域、偏移单位（绝对/百分比）、扳机模式（<code>连点</code>/<code>连发</code>）、开火间隔与首发延迟等。与二级菜单「自动瞄准」「自动压枪」「自动扳机」面板一致，保存时写入同一 <code>ModelOverlayConfig</code>。</p>
 
-        <!-- 激活配对 -->
-        <section id="pairing" class="section">
-                <h2>📡 无线配对与激活</h2>
-                <span class="subtitle">WIRELESS PAIRING // ACTIVATION</span>
-                
-                <div class="info-box">
-                    <p>再次打开助手后，你需要完成无线配对。以下提供 3 种方式（推荐方案 A）。</p>
-                </div>
+      <div class="note">JSON 中浮点数不允许 NaN/Inf，否则写入失败会导致整份配置保存失败。</div>
+    </section>
 
-                <div class="info-box">
-                    <h3>方案 A: 电脑激活 (推荐/最稳定)</h3>
-                    <ul>
-                        <li>电脑解压 adb 压缩包。</li>
-                        <li>打开 cmd 窗口，执行 <code>cd</code> 命令进入这个压缩包目录。</li>
-                        <li>执行命令：<code>adb tcpip 5555</code></li>
-                        <li>出现 “restarting in TCP mode port: 5555” 就代表激活成功。</li>
-                    </ul>
-                </div>
+    <section id="adb-pair">
+      <h2>七、ADB 与无线配对</h2>
+      <p>在 <strong>ADB</strong> Tab 可查看连接状态、启动服务、配对相关日志等。无线配对可通过专用悬浮窗完成（标题「<strong>无线配对</strong>」）：输入<strong>配对端口</strong>（最多 5 位数字）与<strong>6 位配对码</strong>，使用内置数字键盘编辑；支持自动扫描配对端口提示（文案如「正在自动扫描配对端口…」）。</p>
+      <p>需<strong>悬浮窗权限</strong>方可显示该面板；若拒绝权限会引导到系统设置开启「显示在其他应用上层」。</p>
+      <div class="warn">ADB 与触摸链路因机型/ROM 差异较大，请以界面日志与官方说明为准；异常时可尝试重试或重启应用。</div>
+    </section>
 
-                <div class="info-box">
-                    <h3>方案 B: APP 内部配对</h3>
-                    <ul>
-                        <li>打开系统【开发者选项】。</li>
-                        <li>找到【无线调试】选项，点击开启并进入详情页。</li>
-                        <li>点击【使用配对码配对】，页面会弹出配对码和端口。
-                            <br><em>注意：要记住弹窗里的配对码和端口，不要记无线调试页面列表里的那个端口。</em></li>
-                        <li><strong>防刷新技巧:</strong> 使用小窗开启助手 APP，或分屏操作。防止切后台导致端口号刷新。</li>
-                        <li>在助手 APP 输入对应的端口和配对码，点击【无线配对】。</li>
-                        <li>配对成功后，系统弹窗会自动关闭，下方会多出一个已配对设备。</li>
-                    </ul>
-                </div>
+    <section id="overlay-l1">
+      <h2>八、悬浮窗一级菜单（点击 / 长按）</h2>
+      <p>屏幕识别运行时在悬浮层显示圆形入口与可展开面板。一级菜单分<strong>上排</strong>与<strong>下排</strong>按钮（见 <code>ScreenCaptureForegroundService</code> 中 <code>upperActionItems</code> / <code>lowerActionItems</code>）。</p>
+      <p class="note">当<strong>一级菜单展开</strong>或<strong>二级配置面板（长按抽屉）打开</strong>时，会<strong>暂停推理</strong>，以减轻负载并避免配置与实时画框争用。</p>
 
-                <div class="info-box">
-                    <h3>触摸初始化</h3>
-                    <ul>
-                        <li>退出助手 APP 重新打开。</li>
-                        <li>会弹出 2 次系统弹窗提示“是否要授权 USB 调用”，点击允许。</li>
-                        <li>等待 10 秒左右，直到页面提示绿色的“触摸初始化完成”。</li>
-                        <li>点击【测试滑动】按钮，测试触摸是否正常。</li>
-                    </ul>
-                </div>
-            </div>
+      <h3>8.1 上排按钮</h3>
+      <table>
+        <thead>
+          <tr><th>名称</th><th>单击</th><th>长按</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>显示方框</td>
+            <td>开关：是否绘制检测框（切换 <code>enabled</code> 并触发回调）。</td>
+            <td>打开二级面板：方框颜色、类名/置信度显示、线条粗细、识别范围相关开关与滑块等（与「显示方框」配置对应）。</td>
+          </tr>
+          <tr>
+            <td>手动触发</td>
+            <td>总开关（若实现中启用）。</td>
+            <td>打开二级面板：手动触发预设、区域、监视类型等（空列表时可新建配置）。</td>
+          </tr>
+          <tr>
+            <td>识别目标</td>
+            <td>在各类别间<strong>循环切换</strong>当前识别类别，并 Toast「当前识别目标：…」；若无类名则提示「当前模型没有可用类名」。</td>
+            <td>打开二级面板：从列表中点选目标类别。</td>
+          </tr>
+          <tr>
+            <td>模型参数</td>
+            <td>直接打开二级面板（与长按相同）。</td>
+            <td>打开二级面板：置信度、NMS、输入尺寸、推理速度、最大识别、QNN/NNAPI 等。</td>
+          </tr>
+          <tr>
+            <td>外设装备</td>
+            <td>开关。</td>
+            <td>打开二级面板（若有）。</td>
+          </tr>
+          <tr>
+            <td>其他设置</td>
+            <td>打开二级面板（当前占位文案可为「敬请期待」类提示）。</td>
+            <td>同上。</td>
+          </tr>
+        </tbody>
+      </table>
 
-        <!-- 启动与模型 -->
-        <section id="launch" class="section">
-                <h2>🚀 启动流程</h2>
-                <span class="subtitle">LAUNCH // MODEL LOADING</span>
+      <h3>8.2 下排按钮</h3>
+      <table>
+        <thead>
+          <tr><th>名称</th><th>单击</th><th>长按</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>性能监控</td>
+            <td>打开二级面板：勾选 FPS/CPU/GPU/延迟/温度等显示项及顺序。</td>
+            <td><strong>不响应长按</strong>（设计如此）；仅单击进入配置。</td>
+          </tr>
+          <tr>
+            <td>同步找色</td>
+            <td>开关。</td>
+            <td>打开二级面板：HSV、取色流程、及与检测相关的置信度/NMS/最大识别等。</td>
+          </tr>
+          <tr>
+            <td>模板匹配</td>
+            <td>开关。</td>
+            <td>打开二级面板：模板列表、模板置信度、模板压枪/模板扳机开关等。</td>
+          </tr>
+          <tr>
+            <td>自动瞄准</td>
+            <td>开关。</td>
+            <td>打开二级面板：触摸区域、偏移、PID 全参数、无目标抬手帧数等。</td>
+          </tr>
+          <tr>
+            <td>自动压枪</td>
+            <td>开关。</td>
+            <td>打开二级面板：压枪单位（绝对/百分比）、压枪 X/Y 等。</td>
+          </tr>
+          <tr>
+            <td>自动扳机</td>
+            <td>开关。</td>
+            <td>打开二级面板：开火区域、扳机模式（连点/连发）、中心范围、开火间隔、首发延迟等。</td>
+          </tr>
+        </tbody>
+      </table>
 
-                <div class="info-box">
-                    <h3><span class="icon">📦</span>导入模型</h3>
-                    <ul>
-                        <li>完成无线配对且触摸初始化完成后，点击右上角的【添加模型】。</li>
-                        <li>导入自定义的 zip 压缩包，包内需包含 3 个文件：
-                            <br>- <code>xxx.bin</code>
-                            <br>- <code>xxx.param</code>
-                            <br>- <code>xxx.class</code></li>
-                        <li>如果模型已存在，可跳过此步。</li>
-                    </ul>
-                </div>
+      <p>二级面板底部通常有<strong>取消</strong>（关闭并可选恢复一级菜单）与<strong>确定</strong>；关闭时会持久化标量配置。若编辑的是「模型参数」，关闭前会将当前置信度/NMS 同步回推理服务。</p>
+    </section>
 
-                <div class="info-box">
-                    <h3><span class="icon">🔐</span>权限授权与启动</h3>
-                    <ul>
-                        <li>点击【点击授权】按钮进行权限检测授权。</li>
-                        <li>系统会弹出“允许辅助瞄准助手录制或投射内容？”的提示，<strong>弹出 2 次都要点击允许</strong>。</li>
-                        <li>点击【开始】按钮，左上角出现悬浮图标代表启动成功。</li>
-                    </ul>
-                </div>
+    <section id="overlay-l2">
+      <h2>九、二级配置面板（各菜单子项摘要）</h2>
 
-                <div class="info-box">
-                    <h3><span class="icon">🎮</span>游戏内操作</h3>
-                    <ul>
-                        <li>进入游戏后，悬浮图标会自动切换到右边。</li>
-                        <li>点击图标打开菜单继续设置参数。</li>
-                        <li>点击空白处关闭菜单（此时可能会卡顿 1-3 秒加载模型，属正常现象）。</li>
-                    </ul>
-                </div>
-            </div>
+      <h3>9.1 「显示方框」</h3>
+      <ul class="bullets">
+        <li>方框颜色；显示类名；方框线条粗细。</li>
+        <li>识别范围：总开关「识别范围」、仅不绘边的「不显示范围」、范围颜色、范围线宽、识别范围大小滑块（约 100～600 px）。</li>
+      </ul>
 
-        <!-- 菜单功能 -->
-        <section id="menu_basic" class="section">
-                <h2>⚙️ 基础功能菜单</h2>
-                <span class="subtitle">MENU OPTIONS // BASIC</span>
+      <h3>9.2 「模型参数」</h3>
+      <ul class="bullets">
+        <li>置信度（10%～100% 档）、NMS 连续滑块、输入尺寸步进、推理速度（ms）、最大识别（1～10）。</li>
+        <li>高通机型显示「QNN加速」开关；以及「NNAPI加速」开关。</li>
+      </ul>
 
-                <div class="info-box">
-                    <h3><span class="icon">🤖</span>模型与框架选择</h3>
-                    <ul>
-                        <li><strong>推理模型:</strong> 下拉框选择你要玩的游戏模型。收起菜单时会加载该模型。</li>
-                        <li><strong>YOLO V5:</strong> 选择 YOLO V5 推理框架（需要导入对应模型）。</li>
-                        <li><strong>YOLO V8:</strong> 选择 YOLO V8 推理框架（需要导入对应模型）。</li>
-                        <li><strong>找色模式:</strong> 使用颜色识别，无需模型文件。需要配置 HSV 颜色参数。</li>
-                        <li><strong>找色游戏类型:</strong> 选择 FPS 或 MOBA 模式（仅找色模式可见）。</li>
-                    </ul>
-                </div>
+      <h3>9.3 「识别目标」</h3>
+      <p>展示当前模型可选类别列表；点选一项设为当前目标。无类名时提示「当前模型未加载类别名称」。</p>
 
-                <div class="info-box">
-                    <h3><span class="icon">👁️</span>显示设置</h3>
-                    <ul>
-                        <li><strong>基础信息:</strong> 开启后，左上角显示耗时、当前帧率、平均帧率。</li>
-                        <li><strong>全屏识别:</strong> 识别全屏。关闭后屏幕中间显示红色正方形，仅识别该区域。</li>
-                        <li><strong>显示类名:</strong> 显示目标类别名称（不建议开，干扰视线）。</li>
-                        <li><strong>显示方框:</strong> 显示识别到的目标方框（不建议开，干扰视线）。</li>
-                        <li><strong>显示骨骼:</strong> 显示骨骼点（部分模型支持，默认隐藏）。</li>
-                        <li><strong>显示轮廓:</strong> 显示轮廓（部分模型支持，默认隐藏）。</li>
-                        <li><strong>显示记牌器:</strong> 显示记牌器功能（仅棋牌游戏模式可见）。</li>
-                    </ul>
-                </div>
+      <h3>9.4 「性能监控」</h3>
+      <p>选择展示指标及顺序（如 FPS、CPU、GPU、延迟、温度等，以界面为准）。</p>
 
-                <div class="info-box">
-                    <h3><span class="icon">🔧</span>其他功能</h3>
-                    <ul>
-                        <li><strong>保存图片:</strong> 开启后，识别到目标时自动保存截图到 <code>/sdcard/yoloSave/</code>。</li>
-                        <li><strong>搜索参数:</strong> 通过分享码搜索并应用他人分享的参数配置。</li>
-                        <li><strong>分享参数:</strong> 生成分享码，将当前参数配置分享给他人（10分钟内只能上传一次）。</li>
-                        <li><strong>重置参数:</strong> 将所有参数恢复为默认值（会先备份当前配置）。</li>
-                        <li><strong>退出程序:</strong> 结束程序运行。</li>
-                    </ul>
-                </div>
-            </div>
+      <h3>9.5 「同步找色」</h3>
+      <p>HSV 相关、取色入口、清除；以及置信度/NMS/最大识别与检测后处理联动项。</p>
 
-        <!-- 自瞄设置 -->
-        <section id="aim_config" class="section">
-                <h2>🎯 自动瞄准配置</h2>
-                <span class="subtitle">AUTO AIM // CONFIGURATION</span>
+      <h3>9.6 「模板匹配」</h3>
+      <p>新增模板、选择编辑中的模板、模板置信度步进、模板压枪/模板扳机开关。</p>
 
-                <div class="info-box">
-                    <h3><span class="icon">🎯</span>瞄准开关与坐标</h3>
-                    <ul>
-                        <li><strong>自动瞄准:</strong> 开启后会自动瞄准到目标。</li>
-                        <li><strong>获取屏幕坐标:</strong> 点击后收起菜单，进入坐标选择模式。长按拖动设置瞄准点，如果开启随机触摸点可双指缩放调整范围。按钮前显示当前坐标 (x,y)。</li>
-                        <li><strong>开启随机触摸点:</strong> 开启后，在设置的触摸点范围内随机选择瞄准位置，避免被检测。需要配合触摸点范围使用。</li>
-                        <li><strong>触摸点范围:</strong> 当开启随机触摸点时，设置随机范围的大小（像素）。</li>
-                        <li><strong>瞄准速度:</strong> 调整瞄准速度滑块，值越大瞄准越快（仅 FPS 模式可见）。</li>
-                    </ul>
-                </div>
+      <h3>9.7 「自动瞄准」</h3>
+      <p>触摸区域框选、显示触摸点、随机触摸、偏移单位（绝对值/百分比）、偏移 X/Y、独立 XY PID 开关与全套 PID/滤波/平滑/积分限幅、无目标抬手帧数等；中间数值可弹出小数字键盘。</p>
 
-                <div class="info-box">
-                    <h3><span class="icon">↔️</span>PID 参数 (X 轴)</h3>
-                    <ul>
-                        <li><strong>KP_X (比例系数):</strong> 调整 X 轴瞄准速度。值越大瞄准越快，但可能产生抖动。默认值: 0.02</li>
-                        <li><strong>KI_X (积分系数):</strong> 消除 X 轴静差，防抖动。默认值: 0.00</li>
-                        <li><strong>KD_X (微分系数):</strong> 抑制 X 轴过冲，防抖动。默认值: 0.1</li>
-                        <li><strong>MA_X (最大移动距离):</strong> X 轴单次最大移动像素值。限制单次移动幅度，防止移动过大。默认值: 5</li>
-                    </ul>
-                </div>
+      <h3>9.8 「自动压枪」</h3>
+      <p>压枪值单位（绝对值/百分比）、压枪 X/Y。</p>
 
-                <div class="info-box">
-                    <h3><span class="icon">↕️</span>PID 参数 (Y 轴)</h3>
-                    <ul>
-                        <li><strong>KP_Y (比例系数):</strong> 调整 Y 轴瞄准速度。值越大瞄准越快，但可能产生抖动。默认值: 0.02</li>
-                        <li><strong>KI_Y (积分系数):</strong> 消除 Y 轴静差，防抖动。默认值: 0.00</li>
-                        <li><strong>KD_Y (微分系数):</strong> 抑制 Y 轴过冲，防抖动。默认值: 0.1</li>
-                        <li><strong>MA_Y (最大移动距离):</strong> Y 轴单次最大移动像素值。限制单次移动幅度，防止移动过大。默认值: 5</li>
-                    </ul>
-                </div>
+      <h3>9.9 「自动扳机」</h3>
+      <p>开火键区域框选；扳机模式「连点 / 连发」；中心点范围、目标方框比例、开火间隔、首发延迟等。</p>
 
-                <div class="info-box">
-                    <h3><span class="icon">📍</span>偏移设置</h3>
-                    <ul>
-                        <li><strong>左右偏移:</strong> 瞄准目标向左右偏移的像素值，0 代表不偏移。正数向右，负数向左。</li>
-                        <li><strong>上下偏移:</strong> 瞄准目标向上下偏移的像素值，0 代表不偏移。正数向下，负数向上。</li>
-                        <li><strong>偏移单位 - 固定值:</strong> 无论距离多远，都偏移固定的 px 值。适合近距离固定偏移。</li>
-                        <li><strong>偏移单位 - 百分比:</strong> 动态偏移。根据目标方框大小自动计算，目标越远偏移越小。适合需要根据距离调整的场景。</li>
-                    </ul>
-                </div>
+      <h3>9.10 「手动触发」</h3>
+      <p>多组预设与监视区域（开火/识别等类型）、新建与重命名、区域编辑等；无配置时引导新建。</p>
+    </section>
 
-                <div class="info-box">
-                    <h3><span class="icon">⚡</span>高级参数</h3>
-                    <ul>
-                        <li><strong>自动调整参数:</strong> 开启后，系统会根据实际情况自动调整 PID 参数。关闭后可手动调整。</li>
-                        <li><strong>保存 PID 配置:</strong> 当自动调整参数开启时，点击此按钮保存当前自动调整的参数并关闭自动调整。</li>
-                        <li><strong>补偿强度:</strong> 触摸补偿强度，默认值: 16384。一般不需要修改。</li>
-                        <li><strong>保存补偿强度:</strong> 重置补偿强度为默认值。</li>
-                    </ul>
-                </div>
-            </div>
+    <section id="caveats">
+      <h2>十、注意事项与常见问题</h2>
+      <ul class="bullets">
+        <li><strong>权限</strong>：屏幕录制（MediaProjection）、悬浮窗、存储、蓝牙/位置（外设与旧版蓝牙扫描）等需按系统提示授予。</li>
+        <li><strong>横竖屏与分辨率</strong>：旋转或分辨率变化后，VirtualDisplay 与叠加层会按代码逻辑刷新；若截屏长边或物理分辨率变化，需等待菜单收起后链路重建。</li>
+        <li><strong>性能</strong>：推理间隔、截屏长边、模型输入尺寸、关闭不必要叠加显示均可改善卡顿与发热。</li>
+        <li><strong>配置未生效</strong>：确认保存路径可写；检查模型路径是否在 <code>config.json</code> 中只存一份键；多输出 ONNX 必须配置输出节点名。</li>
+        <li><strong>合规</strong>：请遵守当地法律法规及游戏/应用服务条款，合理使用辅助功能。</li>
+      </ul>
+    </section>
 
-        <!-- 扳机配置 -->
-        <section id="trigger_config" class="section">
-                <h2>🔫 自动扳机配置</h2>
-                <span class="subtitle">AUTO TRIGGER // FIRE CONTROL</span>
+    <footer>
+      <p>界面配色对齐 ThemeColors：背景 #1A1B1F · 强调色 #00DB68 · 表面 #292E32</p>
+      <p>文档随工程源码整理，修订日期以你本地文件为准。</p>
+    </footer>
+    </main>
+  </div>
+  <script>
+    (function () {
+      var article = document.querySelector('.article');
+      var nav = document.querySelector('.doc-nav');
+      if (!article || !nav) return;
 
-                <div class="info-box">
-                    <h3><span class="icon">🎮</span>开火模式</h3>
-                    <ul>
-                        <li><strong>关闭自动开火:</strong> 关闭自动开火功能。</li>
-                        <li><strong>连续点击:</strong> 快速连续点击开火键（连发模式按下时长: 5ms）。</li>
-                        <li><strong>连续三连发:</strong> 三连发模式（连发模式按下时长: 300ms）。</li>
-                    </ul>
-                </div>
+      var links = nav.querySelectorAll('a[href^="#"]');
+      var sections = article.querySelectorAll('section[id]');
+      if (!sections.length || !links.length) return;
 
-                <div class="info-box">
-                    <h3><span class="icon">📍</span>开火坐标与范围</h3>
-                    <ul>
-                        <li><strong>获取屏幕开火坐标:</strong> 点击后收起菜单，进入坐标选择模式。长按拖动设置开火键的触摸点坐标。按钮前显示当前坐标 (x,y)。</li>
-                        <li><strong>中心点开火范围:</strong> 当目标中心进入该范围时触发开火（屏幕中心会有红色小方框显示范围）。默认值: 10 像素。</li>
-                        <li><strong>目标方框范围比例:</strong> 目标方框需要覆盖多少比例才触发开火。范围 0.0-1.0，默认值: 0.8（即目标方框 80% 在范围内才开火）。</li>
-                    </ul>
-                </div>
+      function getViewportBias() {
+        return window.innerWidth < 900 ? 88 : 28;
+      }
 
-                <div class="info-box">
-                    <h3><span class="icon">⏱️</span>开火速度与延迟</h3>
-                    <ul>
-                        <li><strong>点射间隔速度 (扫射点射速度):</strong> 识别到目标后循环触发开火的时间间隔 (ms)。默认值: 150ms。
-                            <br><em>例如设置为 118，则每 118ms 自动按一次开火。</em></li>
-                        <li><strong>扳机延迟开火:</strong> 识别到目标后延迟多少毫秒才开始开火。默认值: 100ms。</li>
-                        <li><strong>连发模式按下时长:</strong> 每次开火按键按下的持续时间（ms）。连续点击模式: 5ms，三连发模式: 300ms。</li>
-                    </ul>
-                </div>
+      function updateActiveNav() {
+        var y = window.scrollY + getViewportBias();
+        var activeId = sections[0].id;
+        for (var i = 0; i < sections.length; i++) {
+          var sec = sections[i];
+          var top = sec.getBoundingClientRect().top + window.scrollY;
+          if (y + 1 >= top) activeId = sec.id;
+        }
 
-                <div class="info-box">
-                    <h3><span class="icon">🔽</span>压枪功能 (仅 FPS 模式)</h3>
-                    <ul>
-                        <li><strong>开启压枪:</strong> 开启后，在扫射时自动向下压枪以抵消后坐力。</li>
-                        <li><strong>扫射压枪倍率:</strong> 压枪的强度倍率。值越大压枪幅度越大。默认值: 0.0（关闭）。</li>
-                        <li><strong>设置手动开火区域:</strong> 设置手动开火区域。开启压枪后，只有手指按在这个区域内才会触发压枪。长按拖动调整区域，双指缩放调整大小。</li>
-                        <li><strong>手动开火区域显示:</strong> 显示当前手动开火区域的中心坐标 (x, y)。</li>
-                    </ul>
-                </div>
-            </div>
-
-        <!-- 其他参数 -->
-        <section id="advanced" class="section">
-                <h2>🔧 其他参数与算法</h2>
-                <span class="subtitle">ADVANCED // ALGORITHM</span>
-
-                <div class="info-box">
-                    <h3><span class="icon">📐</span>识别范围设置</h3>
-                    <ul>
-                        <li><strong>识别范围:</strong> (仅 FPS 模式，关闭全屏识别时可见) 设置中心识别区域的大小（像素）。默认值: 325。</li>
-                        <li><strong>识别范围倍数:</strong> (MOBA/棋牌模式) 设置识别范围相对于屏幕的倍数。范围 0.0-1.0，默认值: 0.7（即屏幕的 70%）。</li>
-                        <li><strong>识别速度:</strong> 每次识别之间的延迟时间（ms）。值越大识别越慢，但可以降低 CPU 占用。默认值: 1ms。</li>
-                    </ul>
-                </div>
-
-                <div class="info-box">
-                    <h3><span class="icon">🎯</span>识别精度参数</h3>
-                    <ul>
-                        <li><strong>置信度 (合格率):</strong> 识别目标的可信度阈值。范围 0-100，数值越小，误识别概率越高，但能识别更多目标。默认值: 70。</li>
-                        <li><strong>去重叠 (NMS 阈值):</strong> 非极大值抑制阈值，用于去除重叠的识别框。范围 0.0-1.0，值越小去重叠越严格。默认值: 0.01。</li>
-                        <li><strong>图像尺寸 (targetSize):</strong> 输入模型的图像尺寸。值越大识别精度越高，但速度越慢。默认值: 256。</li>
-                    </ul>
-                </div>
-
-                <div class="info-box">
-                    <h3><span class="icon">🏷️</span>类名识别设置</h3>
-                    <ul>
-                        <li><strong>识别类名:</strong> 多选框选择要识别的目标类别（如只识别头部或身体，或同时识别）。勾选的类名才会被识别。</li>
-                        <li><strong>编辑类名:</strong> 点击进入编辑模式，可以修改类名的显示名称。再次点击保存修改。</li>
-                        <li><strong>独立的类名参数配置:</strong> 开启后，可以为每个类名单独配置偏移参数。每个类名可以设置独立的左右偏移和上下偏移。</li>
-                        <li><strong>类名配置容器:</strong> 当开启独立的类名参数配置时，会显示每个类名的配置项，包括启用开关和偏移参数。</li>
-                    </ul>
-                </div>
-
-                <div class="info-box">
-                    <h3><span class="icon">🎨</span>找色模式参数 (仅找色模式)</h3>
-                    <ul>
-                        <li><strong>启用找色:</strong> 在模型推理的同时进行颜色识别（仅 YOLO 模式可见）。</li>
-                        <li><strong>颜色选择器按钮:</strong> 打开颜色选择器，在屏幕上选择要识别的颜色。</li>
-                        <li><strong>颜色 H 最小值/最大值:</strong> 色相 (Hue) 范围，0-180。默认最小值: 0，最大值: 10。</li>
-                        <li><strong>颜色 S 最小值/最大值:</strong> 饱和度 (Saturation) 范围，0-255。默认最小值: 80，最大值: 255。</li>
-                        <li><strong>颜色 V 最小值/最大值:</strong> 明度 (Value) 范围，0-255。默认最小值: 80，最大值: 255。</li>
-                        <li><strong>颜色最小尺寸:</strong> 颜色块最小尺寸阈值（像素），小于该宽或高的颜色块将被忽略。默认值: 10。</li>
-                        <li><strong>颜色预览块:</strong> 实时显示当前 HSV 参数对应的颜色。</li>
-                    </ul>
-                </div>
-
-                <div class="info-box">
-                    <h3><span class="icon">👆</span>手动触发识别 (仅 FPS 模式)</h3>
-                    <ul>
-                        <li><strong>手动触发识别:</strong> 开启后，只有手指按在指定区域时才会触发识别和瞄准。</li>
-                        <li><strong>设置识别触发区域:</strong> 设置手动触发识别的区域。长按拖动调整区域位置，双指缩放调整区域大小。</li>
-                        <li><strong>手动触发识别区域 X/Y:</strong> 触发区域的中心坐标。</li>
-                        <li><strong>手动触发识别区域半径:</strong> 触发区域的半径（像素）。默认值: 200。</li>
-                    </ul>
-                </div>
-
-                <div class="info-box">
-                    <h3><span class="icon">🧮</span>瞄准算法说明</h3>
-                    <p>本助手采用 <strong>“靠近准星优先 + PID 控制器”</strong> 算法。</p>
-                    <ul>
-                        <li><strong>目标选择:</strong> 优先锁定距离准星最近的目标。</li>
-                        <li><strong>移动控制:</strong> 使用 PID 算法进行平滑移动，分为 X 轴和 Y 轴独立控制。</li>
-                        <li><strong>PID 原理:</strong>
-                            <br>- P (比例): 根据误差大小调整移动速度
-                            <br>- I (积分): 消除长期误差（静差）
-                            <br>- D (微分): 抑制过冲和抖动</li>
-                        <li><strong>注意事项:</strong> 可能会出现“瞄不准”、“抖动”或“在两个目标间来回切换”的情况，需要根据实际情况调整 PID 参数和偏移值。</li>
-                    </ul>
-                </div>
-
-                <div class="info-box">
-                    <h3><span class="icon">💡</span>参数调优建议</h3>
-                    <ul>
-                        <li><strong>瞄准抖动:</strong> 减小 KP 值，增大 KD 值，减小 MA 值。</li>
-                        <li><strong>瞄准过慢:</strong> 增大 KP 值，增大 MA 值。</li>
-                        <li><strong>瞄不准:</strong> 调整偏移值，或使用百分比偏移模式。</li>
-                        <li><strong>误识别:</strong> 增大置信度值，增大去重叠值。</li>
-                        <li><strong>识别慢:</strong> 减小图像尺寸，增大识别速度值。</li>
-                        <li><strong>开火不灵敏:</strong> 减小中心点开火范围，减小目标方框范围比例。</li>
-                    </ul>
-                </div>
-            </div>
-
-        <!-- 主界面功能 -->
-        <section id="main_interface" class="section">
-                <h2>🖥️ 主界面功能说明</h2>
-                <span class="subtitle">MAIN INTERFACE // FUNCTIONS</span>
-
-                <div class="info-box">
-                    <h3><span class="icon">🔐</span>权限状态显示</h3>
-                    <ul>
-                        <li><strong>文件访问权限:</strong> 显示文件读写权限状态（绿色=已授权，红色=未授权）。</li>
-                        <li><strong>悬浮窗口权限:</strong> 显示悬浮窗权限状态（绿色=已授权，红色=未授权）。</li>
-                        <li><strong>无线调试权限:</strong> 显示无线调试配对状态（绿色=已配对，红色=未配对）。</li>
-                        <li><strong>捕获屏幕权限:</strong> 显示屏幕录制权限状态（绿色=已授权，红色=未授权）。</li>
-                        <li><strong>模拟触摸权限:</strong> 显示触摸服务状态（绿色=已连接，红色=未连接）。</li>
-                    </ul>
-                </div>
-
-                <div class="info-box">
-                    <h3><span class="icon">👆</span>触摸设备配置</h3>
-                    <ul>
-                        <li><strong>蓝牙触摸:</strong> 使用 ADB 蓝牙触摸方式（推荐）。</li>
-                        <li><strong>外部设备:</strong> 使用外部设备触摸方式。</li>
-                        <li><strong>输入触摸设备:</strong> 手动输入触摸设备名称（高级功能）。</li>
-                        <li><strong>查看输入设备列表:</strong> 查看所有可用的输入设备列表。</li>
-                        <li><strong>滑动测试:</strong> 测试触摸功能是否正常（会自动下拉通知栏）。</li>
-                    </ul>
-                </div>
-
-                <div class="info-box">
-                    <h3><span class="icon">📦</span>模型管理</h3>
-                    <ul>
-                        <li><strong>添加模型:</strong> 导入模型 zip 压缩包（包含 .bin、.param、.class 文件）。</li>
-                        <li><strong>刷新模型:</strong> 刷新模型列表，显示最新导入的模型。</li>
-                        <li><strong>模型列表:</strong> 显示所有已导入的模型，点击选择要使用的模型。</li>
-                    </ul>
-                </div>
-
-                <div class="info-box">
-                    <h3><span class="icon">☁️</span>在线配置功能</h3>
-                    <ul>
-                        <li><strong>刷新在线配置列表:</strong> 刷新并显示最近 20 条在线分享的参数配置。</li>
-                        <li><strong>搜索配置:</strong> 通过分享码搜索特定的参数配置。</li>
-                        <li><strong>上传配置到服务器:</strong> 将当前参数配置上传到服务器并生成分享码（10分钟内只能上传一次）。</li>
-                        <li><strong>在线配置列表:</strong> 显示其他用户分享的参数配置，可以查看设备信息和参数对比，选择性地应用参数。</li>
-                    </ul>
-                </div>
-
-                <div class="info-box">
-                    <h3><span class="icon">🔧</span>其他功能</h3>
-                    <ul>
-                        <li><strong>登录卡密:</strong> 输入卡密进行验证（必填）。</li>
-                        <li><strong>显示/隐藏卡密:</strong> 切换卡密输入框的显示/隐藏状态。</li>
-                        <li><strong>权限授权:</strong> 一键检测并申请所有必要权限。</li>
-                        <li><strong>开始:</strong> 启动辅助功能（需要完成所有权限授权和模型导入）。</li>
-                        <li><strong>退出程序:</strong> 退出应用程序。</li>
-                        <li><strong>客服按钮:</strong> 打开客服页面（如果已配置）。</li>
-                        <li><strong>教程按钮:</strong> 打开教程页面（如果已配置）。</li>
-                    </ul>
-                </div>
-
-                <div class="info-box">
-                    <h3><span class="icon">💻</span>ADB Shell 指令 (高级)</h3>
-                    <ul>
-                        <li><strong>无线配对提示:</strong> 打开 ADB Shell 指令输入窗口，可以执行自定义 ADB 命令。</li>
-                        <li><strong>其他激活提示:</strong> 查看其他激活方式的手动命令说明。</li>
-                        <li><em>注意：ADB Shell 功能需要先完成无线配对。</em></li>
-                    </ul>
-                </div>
-
-                <div class="info-box">
-                    <h3><span class="icon">📊</span>状态提示</h3>
-                    <ul>
-                        <li><strong>APP权限状态:</strong> 显示当前权限状态和提示信息。</li>
-                        <li><strong>adb连接状态:</strong> 显示 ADB 连接和触摸服务初始化状态。</li>
-                        <li><strong>使用说明:</strong> 显示使用提示信息。</li>
-                    </ul>
-                </div>
-        </section>
-    </div>
-
-    <script>
-        // 平滑滚动到锚点
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetSection = document.querySelector(targetId);
-                
-                if (targetSection) {
-                    // 更新活动状态
-                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    // 平滑滚动
-                    targetSection.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
+        links.forEach(function (link) {
+          var id = link.getAttribute('href').slice(1);
+          var on = id === activeId;
+          link.classList.toggle('is-active', on);
+          if (on) link.setAttribute('aria-current', 'location');
+          else link.removeAttribute('aria-current');
         });
+      }
 
-        // 监听滚动，更新活动导航项
-        window.addEventListener('scroll', function() {
-            const sections = document.querySelectorAll('.section');
-            const navLinks = document.querySelectorAll('.nav-link');
-            
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if (window.pageYOffset >= sectionTop - 150) {
-                    current = section.getAttribute('id');
-                }
-            });
+      var ticking = false;
+      function onScroll() {
+        if (!ticking) {
+          window.requestAnimationFrame(function () {
+            updateActiveNav();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }
 
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === '#' + current) {
-                    link.classList.add('active');
-                }
-            });
-        });
-    </script>
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', function () {
+        updateActiveNav();
+      });
+      updateActiveNav();
+    })();
+  </script>
 </body>
 </html>
