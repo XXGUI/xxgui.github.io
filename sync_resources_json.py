@@ -1,9 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-扫描 assets/ 与 jniLibs/，与现有 resources.json 比对：
-  仅当 assets、jniLibs 任一节与磁盘扫描结果不一致时才写入文件。
-  jniLibs 目录布局：<abi>/common/* 与 <abi>/V##/*（HTP）。
+扫描 assets/ 与 jniLibs/，按磁盘现状直接重写 resources.json（不做与旧 JSON 的比对）：
+  assets：path、url、size、sha256
+  jniLibs：各架构下 common/htp 的文件列表、url、size、sha256
+
+每次运行都根据当前文件重新统计大小与 sha256；增删文件、同名替换均生效。
+
+jniLibs 目录布局：<abi>/common/* 与 <abi>/V##/*（HTP）。
+
+若 resources.json 顶层还有其它自定义字段，会从旧文件读入后保留，仅覆盖 assets、jniLibs。
 """
 
 from __future__ import annotations
@@ -126,7 +132,7 @@ def load_json(path: Path) -> dict:
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="根据 assets/ 与 jniLibs/ 扫描结果同步 resources.json。"
+        description="根据 assets/ 与 jniLibs/ 扫描结果直接重写 resources.json（不比对旧内容）。"
     )
     parser.add_argument(
         "--root",
@@ -164,27 +170,11 @@ def main() -> int:
     scanned_assets = scan_assets(assets_root, base_url)
     scanned_jni = scan_jni_libs(jni_root, base_url)
 
-    old_assets = before.get("assets", [])
-    old_jni = before.get("jniLibs", {})
-    if not isinstance(old_assets, list):
-        old_assets = []
-    if not isinstance(old_jni, dict):
-        old_jni = {}
-
-    changed = scanned_assets != old_assets or scanned_jni != old_jni
-
     abis = list(scanned_jni.keys())
     print(f"assets：{len(scanned_assets)} 个文件；jniLibs 架构：{abis}")
 
     if args.dry_run:
-        if changed:
-            print("预览：与现有 resources.json 不一致（未写入）。")
-        else:
-            print("预览：与现有 resources.json 一致（未写入）。")
-        return 0
-
-    if not changed:
-        print("与 resources.json 一致，无变更，跳过写入。")
+        print("预览结束（未写入文件）。")
         return 0
 
     data = {**before}

@@ -8,6 +8,7 @@
     {"code": "SM8475", "name": "骁龙 8+ Gen 1", "device_id": "42", "htp_arch": "69", "htp_arch_ver": "V69"},
     {"code": "SM8550", "name": "骁龙 8 Gen 2", "device_id": "43", "htp_arch": "73", "htp_arch_ver": "V73"},
     {"code": "SM8650", "name": "骁龙 8 Gen 3", "device_id": "57", "htp_arch": "75", "htp_arch_ver": "V75"},
+    
     {"code": "SM8750", "name": "骁龙 8 Elite", "device_id": "69", "htp_arch": "79", "htp_arch_ver": "V79"},
     {"code": "SM8750P", "name": "骁龙 8 Elite", "device_id": "69", "htp_arch": "79", "htp_arch_ver": "V79"},
     {"code": "SM8750-AB", "name": "骁龙 8 Elite", "device_id": "69", "htp_arch": "79", "htp_arch_ver": "V79"},

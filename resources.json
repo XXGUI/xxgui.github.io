@@ -25,6 +25,12 @@
             "sha256": "db9016d4cf41ec204db654e56639d6e64baa5e7c454b3fb9f1b97661a8a838d8"
           },
           {
+            "file": "libadb.so",
+            "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/common/libadb.so",
+            "size": 5142600,
+            "sha256": "47ea035fa5ed57f6149a2b025bbbd4b21584c355c05d0400416804715e4c12de"
+          },
+          {
             "file": "libbase.so",
             "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/common/libbase.so",
             "size": 218928,
@@ -75,26 +81,26 @@
           {
             "file": "libQnnCpu.so",
             "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/common/libQnnCpu.so",
-            "size": 6658336,
-            "sha256": "042a91a3146c4e328d58fa155e97ab2ebddabe5598af18d24ba92334ec894d8d"
+            "size": 6744616,
+            "sha256": "d990f658894ffcced668b9ff50f20e78aa306acef1711cfba67573aa47c34c18"
           },
           {
             "file": "libQnnHtp.so",
             "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/common/libQnnHtp.so",
-            "size": 2778176,
-            "sha256": "090e993822564851eab1405aff171643b21e644e3f696c95c96f2732aaed813a"
+            "size": 2952008,
+            "sha256": "b5b36b2d5e0cc352b5e5f468f6f668b1585d515854fc1c5890b1365047a36be1"
           },
           {
             "file": "libQnnHtpPrepare.so",
             "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/common/libQnnHtpPrepare.so",
-            "size": 85539184,
-            "sha256": "09b1c15c62b6875af49ffd3d841961c098b85c367f584fee370f986c62511298"
+            "size": 87739504,
+            "sha256": "d0001d629c6d7ded14f2c850e93983b87589cd5748724bb9aaf56f7adb2b338a"
           },
           {
             "file": "libQnnSystem.so",
             "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/common/libQnnSystem.so",
-            "size": 2983560,
-            "sha256": "7e69258e1278cc9b2bb62dbc6e2a52c227a100d6505a13fd6324a87993d0bba8"
+            "size": 3635400,
+            "sha256": "f08e9ddc18a40719839cce8bbfb3afd3aef06f5ad486b21934a1c4568c9a6a48"
           },
           {
             "file": "libutils.so",
@@ -128,16 +134,10 @@
           "htp_arch_ver": "V68",
           "files": [
             {
-              "file": "libQnnHtpV68Skel.so",
-              "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/V68/libQnnHtpV68Skel.so",
-              "size": 9499060,
-              "sha256": "e1c116069359c47f8093f2736d1d083a6e9c25cc8671308406b1d22c1abd20b5"
-            },
-            {
               "file": "libQnnHtpV68Stub.so",
               "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/V68/libQnnHtpV68Stub.so",
-              "size": 672648,
-              "sha256": "8cd5522ac8bd2919d0d65693eaaff202e208b575143bfd736fef81e2c47ae9c0"
+              "size": 720376,
+              "sha256": "a991371f14bc5928fdaf6e35fc3a4a0d50421e3e7ff193eb04aa1667a30e0652"
             }
           ]
         },
@@ -146,16 +146,10 @@
           "htp_arch_ver": "V69",
           "files": [
             {
-              "file": "libQnnHtpV69Skel.so",
-              "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/V69/libQnnHtpV69Skel.so",
-              "size": 10754252,
-              "sha256": "220414e7ced270840350eed9399020d81eb2d3a3d0ac627976435b29cd5ae43c"
-            },
-            {
               "file": "libQnnHtpV69Stub.so",
               "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/V69/libQnnHtpV69Stub.so",
-              "size": 672648,
-              "sha256": "5703b806359918f81165a31a7eff3abcff9e724a2c2931b1a2f18bfd703bd92d"
+              "size": 720376,
+              "sha256": "fd3300e78573b36f686cd7cd11146d3957ea57129ae8feb49b0adfa55cfd7a85"
             }
           ]
         },
@@ -164,16 +158,10 @@
           "htp_arch_ver": "V73",
           "files": [
             {
-              "file": "libQnnHtpV73Skel.so",
-              "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/V73/libQnnHtpV73Skel.so",
-              "size": 10761464,
-              "sha256": "11c76e1d9bcc8a3168e47f73e48baba0da8e1ca03b7c429e4a5777eab5d20c5a"
-            },
-            {
               "file": "libQnnHtpV73Stub.so",
               "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/V73/libQnnHtpV73Stub.so",
-              "size": 679168,
-              "sha256": "ef0d0cbbdd423a81c19fb0f60d1451b602bcd60c08b3564f1c82e632fb59f157"
+              "size": 726960,
+              "sha256": "20df4411e91254a83ec3815f80b28411e057a03352bcbd42360c65a1def7200c"
             }
           ]
         },
@@ -182,16 +170,10 @@
           "htp_arch_ver": "V75",
           "files": [
             {
-              "file": "libQnnHtpV75Skel.so",
-              "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/V75/libQnnHtpV75Skel.so",
-              "size": 10794236,
-              "sha256": "3997e70b0409060756d8c4e45068ca3f5b8dc405f1978db0b2b03a74b79f4b6a"
-            },
-            {
               "file": "libQnnHtpV75Stub.so",
               "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/V75/libQnnHtpV75Stub.so",
-              "size": 679168,
-              "sha256": "07eb7cd2e68f6fb82bfbcd6e2cf09455670fb5ca31537e9b6725d044d378c306"
+              "size": 726960,
+              "sha256": "4056b6e1c455df1ad39f9d527760f3b8ff982d19bfaf2fd2812db8fba9892591"
             }
           ]
         },
@@ -200,16 +182,10 @@
           "htp_arch_ver": "V79",
           "files": [
             {
-              "file": "libQnnHtpV79Skel.so",
-              "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/V79/libQnnHtpV79Skel.so",
-              "size": 10975268,
-              "sha256": "41f83395ed4b1bcfc43417a1b82f3f137c825747711c9ab4c9d50034ed198f98"
-            },
-            {
               "file": "libQnnHtpV79Stub.so",
               "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/V79/libQnnHtpV79Stub.so",
-              "size": 679168,
-              "sha256": "005bd3de462851ce3dde55260d7d8560d6d07dbc309f554780b1f6412e6d9df1"
+              "size": 726960,
+              "sha256": "16ed6f58965bcabc5cbe4e6c322a4953aefe2c74d6d1c662e70e6234eae0c662"
             }
           ]
         },
@@ -218,16 +194,10 @@
           "htp_arch_ver": "V81",
           "files": [
             {
-              "file": "libQnnHtpV81Skel.so",
-              "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/V81/libQnnHtpV81Skel.so",
-              "size": 11797220,
-              "sha256": "66719325303f22562679edfed509d540cbff53ac59127b6e4ead84b62f1dc655"
-            },
-            {
               "file": "libQnnHtpV81Stub.so",
               "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/V81/libQnnHtpV81Stub.so",
-              "size": 755464,
-              "sha256": "f85cc467bda23b8253f085c4fa2680a1428e5b94c6c5a3e572abaa20c5b13ba1"
+              "size": 803416,
+              "sha256": "e97898d6772288e202e9cf988b80b39b8336f3dca8b99ee3075d234093582e3c"
             }
           ]
         }
