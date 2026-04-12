@@ -79,24 +79,6 @@
             "sha256": "120e48cababd106c736e025b672a089de0552eb2f791a1c2c5bdf26dad59cba4"
           },
           {
-            "file": "libhidlmemory.so",
-            "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/common/libhidlmemory.so",
-            "size": 52256,
-            "sha256": "9642346b035157e74cd5e2271066c3e68c0b22743bc7927dceca88a7872c93a5"
-          },
-          {
-            "file": "libhidltransport.so",
-            "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/common/libhidltransport.so",
-            "size": 35256,
-            "sha256": "6d0a330acf763ac1525184031787dbae8e1f2251503b0f9dc70328f46314be79"
-          },
-          {
-            "file": "libhwbinder.so",
-            "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/common/libhwbinder.so",
-            "size": 35256,
-            "sha256": "99afe43f12546b015ac9d748ee87d6f12925d5e3d6cb28dcaebf58fa934403ee"
-          },
-          {
             "file": "libQnnCpu.so",
             "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/common/libQnnCpu.so",
             "size": 6658336,
@@ -137,12 +119,6 @@
             "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/common/libvndksupport.so",
             "size": 51352,
             "sha256": "3ce8b48aa76739ad3a8668dc8fc0ce462151a984b4a6bd881aa473f4f09fc179"
-          },
-          {
-            "file": "vendor.qti.hardware.dsp-V1-ndk.so",
-            "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/common/vendor.qti.hardware.dsp-V1-ndk.so",
-            "size": 85680,
-            "sha256": "48c3ffefecea18056c473d74129ff6dbc5ed5d2cb567a95df517c19aef5aa3e1"
           },
           {
             "file": "vendor.qti.hardware.dsp@1.0.so",
