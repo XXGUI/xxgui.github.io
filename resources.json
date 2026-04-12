@@ -85,6 +85,12 @@
             "sha256": "120e48cababd106c736e025b672a089de0552eb2f791a1c2c5bdf26dad59cba4"
           },
           {
+            "file": "libopencv_java4.so",
+            "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/common/libopencv_java4.so",
+            "size": 20897272,
+            "sha256": "048003cd5b07f9ebbd28856889afb3d29989ebb612e3f1d4a291fe2b68680421"
+          },
+          {
             "file": "libqnn_native_support_jni.so",
             "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/common/libqnn_native_support_jni.so",
             "size": 102848,
