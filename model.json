@@ -5,8 +5,7 @@
 			"precision": "FP32",
 			"classNames": [
 				"全身",
-				"头部",
-				"类别2"
+				"头部"
 			],
 			"size": 256,
 			"gameType": "FPS",
