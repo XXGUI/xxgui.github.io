@@ -3,8 +3,8 @@
     {
       "path": "xxgsdk",
       "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/assets/xxgsdk",
-      "size": 1771984,
-      "sha256": "5613c7d7ea331866cd22bd2e4030ae7c11caf6ce44bdd46721af10671a4ee000"
+      "size": 1935552,
+      "sha256": "07daa577452fd21a5cf1bb07877de29cd11c5b49f76674c555215b68b4eb8376"
     }
   ],
   "jniLibs": {
