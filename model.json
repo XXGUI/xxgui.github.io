@@ -1,3 +1,16 @@
 {
-	"models": []
+	"models": [
+		{
+			"modelName": "瓦-黄色-256",
+			"precision": "FP32",
+			"classNames": [
+				"全身",
+				"头部"
+			],
+			"size": 256,
+			"gameType": "FPS",
+			"iconUrl": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/icon/%E6%97%A0%E7%95%8F%E5%A5%91%E7%BA%A6.png",
+			"downloadUrl": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/model/%E7%93%A6-%E9%BB%84%E8%89%B2-256.ncnn"
+		}
+	]
 }
