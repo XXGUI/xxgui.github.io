@@ -8,15 +8,15 @@
         "title": "购卡地址",
         "type": "webView",
         "data": "https://pay.ldxp.cn/shop/xxg",
-        "color": "#00CAFC",
-        "textColor": "#FFFFFF"
+        "color": "#FF3B30",
+        "textColor": "#FFD600"
       },
       {
         "groupId": "tg",
         "title": "TG频道",
         "type": "webView",
         "data": "https://t.me/XXG_AI_AIM",
-        "color": "#229ED9",
+        "color": "#00CAFC",
         "textColor": "#FFFFFF"
       }
     ]
