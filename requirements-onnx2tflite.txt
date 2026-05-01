@@ -1,0 +1,14 @@
+# onnx2tflite.py：ONNX -> SavedModel -> TFLite INT8
+# 安装: pip install -r requirements-onnx2tflite.txt
+#
+# 1) onnx-tf 会拉取 tensorflow_probability，需 tf-keras。
+# 2) TensorFlow 2.16+ 默认 Keras 3，与 onnx-tf 依赖的 tensorflow_addons 不兼容
+#    （常见: No module named 'keras.src.engine'）。此处将 TF 限制在 2.15.x。
+#    请在独立 venv 中安装本文件，勿与需要 TF 2.16+ 的其他项目混用同一环境。
+
+onnx>=1.14,<2
+onnx-tf>=1.10.0
+tensorflow>=2.14.0,<2.16.0
+tf-keras>=2.14.0,<2.16.0
+opencv-python-headless>=4.8
+numpy>=1.23
