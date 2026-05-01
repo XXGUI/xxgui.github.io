@@ -3,11 +3,13 @@
 """
 扫描 assets/ 与 jniLibs/，按磁盘现状直接重写 resources.json（不做与旧 JSON 的比对）：
   assets：path、url、size、sha256
-  jniLibs：各架构下 common/htp 的文件列表、url、size、sha256
+  jniLibs：文件列表、url、size、sha256
 
 每次运行都根据当前文件重新统计大小与 sha256；增删文件、同名替换均生效。
 
-jniLibs 目录布局：<abi>/common/* 与 <abi>/V##/*（HTP）。
+jniLibs 支持两种目录布局：
+  1) 旧结构：<abi>/common/* 与 <abi>/V##/*（HTP）
+  2) 新结构：<abi>/*（文件直接放在 ABI 根目录）
 
 若 resources.json 顶层还有其它自定义字段，会从旧文件读入后保留，仅覆盖 assets、jniLibs。
 """
@@ -94,6 +96,13 @@ def scan_jni_libs(jni_root: Path, base_url: str) -> dict:
     for abi_dir in sorted(p for p in jni_root.iterdir() if p.is_dir()):
         abi = abi_dir.name
         block: dict = {}
+        # new flat layout: all .so files directly under <abi>/
+        flat_files = scan_jni_group_files(abi_dir, base_url, f"jniLibs/{abi}")
+        if flat_files:
+            block["path"] = f"jniLibs/{abi}"
+            block["files"] = flat_files
+            out[abi] = block
+            continue
         # common
         common_dir = abi_dir / "common"
         if common_dir.is_dir():
@@ -132,7 +141,7 @@ def load_json(path: Path) -> dict:
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="根据 assets/ 与 jniLibs/ 扫描结果直接重写 resources.json（不比对旧内容）。"
+        description="根据 assets/ 与 jniLibs/ 扫描结果直接重写 resources.json（支持旧/新 jniLibs 布局）。"
     )
     parser.add_argument(
         "--root",
