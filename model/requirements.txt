@@ -1,5 +1,0 @@
-# ONNX 模型检测 / FP16 / INT8 量化 / ONNX Runtime 验证
-onnx>=1.14.0
-numpy>=1.23.0
-onnxruntime>=1.16.0
-onnxconverter-common>=1.13.0
