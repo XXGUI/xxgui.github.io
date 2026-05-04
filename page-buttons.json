@@ -4,14 +4,6 @@
     "title": "登录页面",
     "buttonGroups": [
       {
-        "groupId": "shop",
-        "title": "购卡地址",
-        "type": "webView",
-        "data": "https://nvn.gcqvip.cc/shop/U1MHAKQR",
-        "color": "#1f883d",
-        "textColor": "#FFFFFF"
-      },
-      {
         "groupId": "tg",
         "title": "TG频道",
         "type": "webView",
