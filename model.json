@@ -2,7 +2,7 @@
 	"models": [
 		{
 			"modelName": "三角洲Dawan-FP32-256",
-			"precision": "INT8",
+			"precision": "FP32",
 			"classNames": [
 				"敌人身体",
 				"敌人头部",
