@@ -1,6 +1,22 @@
 {
 	"models": [
 		{
+			"modelName": "三角洲Dawan-FP32-256",
+			"precision": "INT8",
+			"classNames": [
+				"敌人身体",
+				"敌人头部",
+				"队友",
+				"人机",
+				"倒地",
+				"假人",
+				"假人头部"
+			  ],
+			"size": 256,
+			"gameType": "FPS",
+			"iconUrl": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/icon/%E4%B8%89%E8%A7%92%E6%B4%B2.png",
+			"downloadUrl": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/model/%E4%B8%89%E8%A7%92%E6%B4%B2Dawan-FP32-256.tflite"
+		},{
 			"modelName": "三角洲-敌我",
 			"precision": "INT8",
 			"classNames": [
