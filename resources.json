@@ -12,6 +12,12 @@
       "path": "jniLibs/arm64-v8a",
       "files": [
         {
+          "file": "libapexsupport.so",
+          "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/libapexsupport.so",
+          "size": 169736,
+          "sha256": "946a3f0d3755897ea6281c32c92990c6aaacfee4bc50cbed07d1631eee2cc43a"
+        },
+        {
           "file": "libqnn_delegate_jni.so",
           "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/libqnn_delegate_jni.so",
           "size": 279168,
