@@ -5,7 +5,14 @@
     "buttonGroups": [
       {
         "groupId": "shop",
-        "title": "购卡地址",
+        "title": "1号卡网",
+        "type": "webView",
+        "data": "https://pay.ldxp.cn/shop/xxg",
+        "color": "#1f883d",
+        "textColor": "#FFFFFF"
+      },{
+        "groupId": "shop",
+        "title": "2号卡网",
         "type": "webView",
         "data": "https://pay.ldxp.cn/shop/YFCE9VJQ",
         "color": "#1f883d",
