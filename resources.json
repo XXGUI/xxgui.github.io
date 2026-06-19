@@ -18,6 +18,30 @@
           "sha256": "946a3f0d3755897ea6281c32c92990c6aaacfee4bc50cbed07d1631eee2cc43a"
         },
         {
+          "file": "libLiteRt.so",
+          "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/libLiteRt.so",
+          "size": 5568480,
+          "sha256": "14e936f3e3b8170e3801e4613fcdd41abd7f911aa854a83a6ab06552d49d2eb6"
+        },
+        {
+          "file": "liblitert_bridge.so",
+          "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/liblitert_bridge.so",
+          "size": 59816,
+          "sha256": "dca8e1658533b65701e650c622ef084b5670aa949c45cc341730cbc2785dc571"
+        },
+        {
+          "file": "libLiteRtCompilerPlugin_MediaTek.so",
+          "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/libLiteRtCompilerPlugin_MediaTek.so",
+          "size": 805704,
+          "sha256": "eca1bf67d310938b58c85b0bac74b229e11b03446ff7d63763a58046223d578e"
+        },
+        {
+          "file": "libLiteRtDispatch_MediaTek.so",
+          "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/libLiteRtDispatch_MediaTek.so",
+          "size": 642000,
+          "sha256": "0770e4d6d409f132ccf508f35f6ea1f6a45510f42fd9f67fb7b72b7d6e3262a4"
+        },
+        {
           "file": "libqnn_delegate_jni.so",
           "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/libqnn_delegate_jni.so",
           "size": 279168,
