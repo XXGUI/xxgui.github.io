@@ -56,7 +56,7 @@
 		},
 		{
 			"modelName": "valorant_256_v26s",
-			"precision": "FP32",
+			"precision": "INT8",
 			"classNames": [
 				"身体",
 				"头部"
