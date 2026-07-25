@@ -10,7 +10,7 @@
 			"size": 320,
 			"gameType": "FPS",
 			"iconUrl": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/icon/%E5%92%8C%E5%B9%B3%E7%B2%BE%E8%8B%B1.png",
-			"downloadUrl": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/model/%E5%92%8C%E5%B9%B3%E7%B2%BE%E8%8B%B1-320.tflite"
+			"downloadUrl": "https://download.mengzhai.club/files/4bc22499-fa52-4bb7-b1b1-ad3b022353e6/9156f389-d8cc-4d68-b618-99885ef5eaac-%E5%92%8C%E5%B9%B3%E7%B2%BE%E8%8B%B1-320.tflite"
 		},
 		{
 			"modelName": "和平精英",
@@ -22,7 +22,7 @@
 			"size": 416,
 			"gameType": "FPS",
 			"iconUrl": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/icon/%E5%92%8C%E5%B9%B3%E7%B2%BE%E8%8B%B1.png",
-			"downloadUrl": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/model/%E5%92%8C%E5%B9%B3%E7%B2%BE%E8%8B%B1-416.tflite"
+			"downloadUrl": "https://download.mengzhai.club/files/4bc22499-fa52-4bb7-b1b1-ad3b022353e6/1550f311-b898-4dfe-a8fa-c5a684ffc4b9-%E5%92%8C%E5%B9%B3%E7%B2%BE%E8%8B%B1-416.tflite"
 		},
 		{
 			"modelName": "三角洲-敌我",
@@ -35,7 +35,7 @@
 			"size": 320,
 			"gameType": "FPS",
 			"iconUrl": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/icon/%E4%B8%89%E8%A7%92%E6%B4%B2.png",
-			"downloadUrl": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/model/%E4%B8%89%E8%A7%92%E6%B4%B2.tflite"
+			"downloadUrl": "https://download.mengzhai.club/files/4bc22499-fa52-4bb7-b1b1-ad3b022353e6/35cc87ac-b8b8-42d9-837e-65b3de40eaed-%E4%B8%89%E8%A7%92%E6%B4%B2.tflite"
 		},
 		{
 			"modelName": "三角洲Dawan-FP32",
@@ -52,7 +52,7 @@
 			"size": 256,
 			"gameType": "FPS",
 			"iconUrl": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/icon/%E4%B8%89%E8%A7%92%E6%B4%B2.png",
-			"downloadUrl": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/model/%E4%B8%89%E8%A7%92%E6%B4%B2Dawan-FP32-256.tflite"
+			"downloadUrl": "https://download.mengzhai.club/files/4bc22499-fa52-4bb7-b1b1-ad3b022353e6/e8482343-a966-4607-b4cb-8671c537dab4-%E4%B8%89%E8%A7%92%E6%B4%B2Dawan-FP32-256.tflite"
 		},
 		{
 			"modelName": "valorant_256_v26s",
@@ -64,7 +64,7 @@
 			"size": 256,
 			"gameType": "FPS",
 			"iconUrl": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/icon/%E6%97%A0%E7%95%8F%E5%A5%91%E7%BA%A6.png",
-			"downloadUrl": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/model/%E7%93%A6_256_v26s.tflite"
+			"downloadUrl": "https://download.mengzhai.club/files/4bc22499-fa52-4bb7-b1b1-ad3b022353e6/15d09917-4c3c-4e4a-8909-bbb226065bf4-%E7%93%A6_256_v26s.tflite"
 		},
 		{
 			"modelName": "瓦v5n-黄色-256",
@@ -76,7 +76,32 @@
 			"size": 256,
 			"gameType": "FPS",
 			"iconUrl": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/icon/%E6%97%A0%E7%95%8F%E5%A5%91%E7%BA%A6.png",
-			"downloadUrl": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/model/%E7%93%A6v5n-%E9%BB%84%E8%89%B2-256.tflite"
+			"downloadUrl": "https://download.mengzhai.club/files/4bc22499-fa52-4bb7-b1b1-ad3b022353e6/60575bc6-1a15-4b31-a8e9-d674625c1a3d-%E7%93%A6v5n-%E9%BB%84%E8%89%B2-256.tflite"
+		},
+		{
+			"modelName": "无畏契约-头身道具",
+			"precision": "INT8",
+			"classNames": [
+				"头部",
+				"身体",
+				"道具"
+			],
+			"size": 320,
+			"gameType": "FPS",
+			"iconUrl": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/icon/%E6%97%A0%E7%95%8F%E5%A5%91%E7%BA%A6.png",
+			"downloadUrl": "https://download.mengzhai.club/files/4bc22499-fa52-4bb7-b1b1-ad3b022353e6/f8ee2cba-ca67-4269-b9a7-be898fc46fc1-%E6%97%A0%E7%95%8F%E5%A5%91%E7%BA%A6-%E5%A4%B4%E8%BA%AB%E9%81%93%E5%85%B7.tflite"
+		},
+		{
+			"modelName": "cf-v11-256",
+			"precision": "INT8",
+			"classNames": [
+				"头部",
+				"身体"
+			],
+			"size": 256,
+			"gameType": "FPS",
+			"iconUrl": "",
+			"downloadUrl": "https://download.mengzhai.club/files/4bc22499-fa52-4bb7-b1b1-ad3b022353e6/69036f53-2199-4f41-9952-644c3fe46aa8-cf-v11-256.tflite"
 		}
 	]
 }
