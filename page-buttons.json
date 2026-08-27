@@ -12,6 +12,14 @@
         "textColor": "#FFFFFF"
       },
       {
+        "groupId": "qq",
+        "title": "🐧QQ群",
+        "type": "app",
+        "data": "mqqopensdkapi://bizAgent/qm/qr?url=http%3A%2F%2Fqm.qq.com%2Fcgi-bin%2Fqm%2Fqr%3Ffrom%3Dapp%26p%3Dandroid%26jump_from%3Dwebapi%26k%3Dc-uv_8MNMQ_YJZvU2dktKVxf6JRxXqGA",
+        "color": "#00CAFC",
+        "textColor": "#FFFFFF"
+      },
+      {
         "groupId": "tg",
         "title": "TG频道",
         "type": "webView",
