@@ -2,9 +2,9 @@
   "assets": [
     {
       "path": "QnnDspV55",
-      "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/assets/QnnDspV55",
-      "size": 674296,
-      "sha256": "253fa631a7ac80a8861d1f7248a4db8c00c4a7931edaa56b30a2b7993e725d51"
+      "url": "https://download.mengzhai.club/files/4bc22499-fa52-4bb7-b1b1-ad3b022353e6/440b2e02-029e-4ba1-84a7-cab4ccdc09cc-QnnDspV55",
+      "size": 678464,
+      "sha256": "87b1daaedfee544a4c5f840bf16e5ded3758168b51fad1af7445583ba807bea2"
     }
   ],
   "jniLibs": {
@@ -13,157 +13,169 @@
       "files": [
         {
           "file": "libapexsupport.so",
-          "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/libapexsupport.so",
+          "url": "https://download.mengzhai.club/files/4bc22499-fa52-4bb7-b1b1-ad3b022353e6/7c022971-736d-4134-af8c-31d6aa43d54c-libapexsupport.so",
           "size": 169736,
           "sha256": "946a3f0d3755897ea6281c32c92990c6aaacfee4bc50cbed07d1631eee2cc43a"
         },
         {
           "file": "libLiteRt.so",
-          "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/libLiteRt.so",
+          "url": "https://download.mengzhai.club/files/4bc22499-fa52-4bb7-b1b1-ad3b022353e6/64282162-6b54-430d-b308-7968c9ef48f7-libLiteRt.so",
           "size": 5568480,
           "sha256": "14e936f3e3b8170e3801e4613fcdd41abd7f911aa854a83a6ab06552d49d2eb6"
         },
         {
           "file": "liblitert_bridge.so",
-          "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/liblitert_bridge.so",
+          "url": "https://download.mengzhai.club/files/4bc22499-fa52-4bb7-b1b1-ad3b022353e6/b88edb89-1659-4d61-af34-74aaa0dfc53e-liblitert_bridge.so",
           "size": 59816,
           "sha256": "dca8e1658533b65701e650c622ef084b5670aa949c45cc341730cbc2785dc571"
         },
         {
           "file": "libLiteRtCompilerPlugin_MediaTek.so",
-          "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/libLiteRtCompilerPlugin_MediaTek.so",
+          "url": "https://download.mengzhai.club/files/4bc22499-fa52-4bb7-b1b1-ad3b022353e6/393f0449-f92a-4ec6-b0ee-399bb4f7df24-libLiteRtCompilerPlugin_MediaTek.so",
           "size": 805704,
           "sha256": "eca1bf67d310938b58c85b0bac74b229e11b03446ff7d63763a58046223d578e"
         },
         {
           "file": "libLiteRtDispatch_MediaTek.so",
-          "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/libLiteRtDispatch_MediaTek.so",
+          "url": "https://download.mengzhai.club/files/4bc22499-fa52-4bb7-b1b1-ad3b022353e6/32d57f5a-420f-48df-9dba-1e58aff89338-libLiteRtDispatch_MediaTek.so",
           "size": 642000,
           "sha256": "0770e4d6d409f132ccf508f35f6ea1f6a45510f42fd9f67fb7b72b7d6e3262a4"
         },
         {
+          "file": "libQnnHtpV85Stub.so",
+          "url": "https://download.mengzhai.club/files/4bc22499-fa52-4bb7-b1b1-ad3b022353e6/8df7fe6d-ee07-4418-ae6e-42d58b0aa56b-libQnnHtpV85Stub.so",
+          "size": 875568,
+          "sha256": "8c3636f34ff763d872623172e192b64983e0578d124e5b73f064c28e372f3874"
+        },
+        {
           "file": "libqnn_delegate_jni.so",
-          "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/libqnn_delegate_jni.so",
+          "url": "https://download.mengzhai.club/files/4bc22499-fa52-4bb7-b1b1-ad3b022353e6/f20594c8-c472-4274-b775-668112fa77d0-libqnn_delegate_jni.so",
           "size": 279168,
           "sha256": "4eff9fc243f52d645f6c5fe100709fd5c6d6aca281a069fcab835347de5cd5f7"
         },
         {
           "file": "libQnnDsp.so",
-          "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/libQnnDsp.so",
-          "size": 1641896,
-          "sha256": "080aaf8127b0bc43b081bb80825628b93dfd9ce2f0a3195bd40ecccfa6c0f53d"
+          "url": "https://download.mengzhai.club/files/4bc22499-fa52-4bb7-b1b1-ad3b022353e6/ad3181bf-7a5a-4083-b3d3-8dfa194881ae-libQnnDsp.so",
+          "size": 1768144,
+          "sha256": "1e5e965d18062d67f7ae80d3bb37616efb6464344d25456413fdc6e54ec43ae5"
         },
         {
           "file": "libQnnDspV66Stub.so",
-          "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/libQnnDspV66Stub.so",
-          "size": 323848,
-          "sha256": "a3f010628d1f097101b30a6cffc7ef1ec412a3f3cbc3a7b2d3e9e0124a79555b"
+          "url": "https://download.mengzhai.club/files/4bc22499-fa52-4bb7-b1b1-ad3b022353e6/a8422f65-60f2-4b88-8b3a-582e95d441ed-libQnnDspV66Stub.so",
+          "size": 328312,
+          "sha256": "754af282bc1bc18dbfe13a0d115b4c18c322e8c52bb5753a953ae3ac7780e47b"
         },
         {
           "file": "libQnnGpu.so",
-          "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/libQnnGpu.so",
-          "size": 7058792,
-          "sha256": "7a3898b68b9cc9baa3658f775a4113e0a146a7660f96c4e6f04c68fb3c003db7"
+          "url": "https://download.mengzhai.club/files/4bc22499-fa52-4bb7-b1b1-ad3b022353e6/346eb0bb-149a-4443-b6c5-85415b888705-libQnnGpu.so",
+          "size": 12367568,
+          "sha256": "414bb78b26fb8f4c340742bdd5a7368b51a4473cb9d9411deb066a7fda2c5947"
         },
         {
           "file": "libQnnHtp.so",
-          "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/libQnnHtp.so",
-          "size": 2952280,
-          "sha256": "0d571eca017fa0c36baef5182e0c137d7959db2bff5aea9b0a8cf49377fb1b14"
+          "url": "https://download.mengzhai.club/files/4bc22499-fa52-4bb7-b1b1-ad3b022353e6/aa2ac770-e631-474d-aa4d-7e06baf48f1a-libQnnHtp.so",
+          "size": 4158272,
+          "sha256": "aaaf6f963ff6d87db516b231182b9be68893fe58498ce510f1cb4ad0c95df0ef"
         },
         {
           "file": "libQnnHtpPrepare.so",
-          "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/libQnnHtpPrepare.so",
-          "size": 87739776,
-          "sha256": "de3d983ca853057988be158ba8244bcead3084fdc8c6dc71bcc596b473bcd12a"
+          "url": "https://download.mengzhai.club/files/4bc22499-fa52-4bb7-b1b1-ad3b022353e6/28b5a645-ecd4-4645-bc56-940926d28bdb-libQnnHtpPrepare.so",
+          "size": 88234712,
+          "sha256": "5d6fa39ff1af44e61fa7b57c047b0ad8c132e7185bcb7a8abe4fec348f4a7c56"
         },
         {
           "file": "libQnnHtpV68Skel.so",
-          "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/libQnnHtpV68Skel.so",
-          "size": 9550216,
-          "sha256": "9f10e3cb684f0d83698185317a5f1e10e89016c4347389d811f4f4a4cffa1f79"
+          "url": "https://download.mengzhai.club/files/4bc22499-fa52-4bb7-b1b1-ad3b022353e6/f1fd85d1-cc44-4350-bc9c-784044b57b55-libQnnHtpV68Skel.so",
+          "size": 12992744,
+          "sha256": "f659d93d893aea52a63d02418cf653fca47452ac56814a39f7efed5269d1ff28"
         },
         {
           "file": "libQnnHtpV68Stub.so",
-          "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/libQnnHtpV68Stub.so",
-          "size": 720648,
-          "sha256": "70773f9af5048bc35e766623b2fd683b5b8e18f6b3ad4de798540a517754f00a"
+          "url": "https://download.mengzhai.club/files/4bc22499-fa52-4bb7-b1b1-ad3b022353e6/cae6a067-adbb-49bd-9aad-f2f8e5600a35-libQnnHtpV68Stub.so",
+          "size": 795168,
+          "sha256": "36eeeb71d39209ec4076c85135de183eaceedde338a4ee902b685f309eb9ccd7"
         },
         {
           "file": "libQnnHtpV69Skel.so",
-          "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/libQnnHtpV69Skel.so",
-          "size": 10840672,
-          "sha256": "7af9cfb680b74561380a0bc95a9d5b373251b7712fa61447bdd6835e7481d200"
+          "url": "https://download.mengzhai.club/files/4bc22499-fa52-4bb7-b1b1-ad3b022353e6/ce0cd9a1-7961-46de-9d7d-e3b11d794c39-libQnnHtpV69Skel.so",
+          "size": 13027816,
+          "sha256": "c9ef587e500d671cab2847c39fcb89823614ccc93c4eec219b8e295453e6ebb8"
         },
         {
           "file": "libQnnHtpV69Stub.so",
-          "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/libQnnHtpV69Stub.so",
-          "size": 720648,
-          "sha256": "1ea25f33d0c6266d3871ef99cfbe6cff1ba2b704f50756e35bdf09b4d6cd017d"
+          "url": "https://download.mengzhai.club/files/4bc22499-fa52-4bb7-b1b1-ad3b022353e6/b9a241eb-c23d-4d35-adc5-9ef7c84a4c18-libQnnHtpV69Stub.so",
+          "size": 795168,
+          "sha256": "19a5f83239ccfa181414ec73c0a4bbba070780b7cab658c6852ad34ffc5e2b6a"
         },
         {
           "file": "libQnnHtpV73Skel.so",
-          "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/libQnnHtpV73Skel.so",
-          "size": 16536172,
-          "sha256": "9bcc993a6aba24e374e6b512c98b3f1af08915ac8ac5dff8b5eac9e134bcb809"
+          "url": "https://download.mengzhai.club/files/4bc22499-fa52-4bb7-b1b1-ad3b022353e6/4d3c8ff4-d7bb-413e-9d96-9055fbc54fd6-libQnnHtpV73Skel.so",
+          "size": 13022416,
+          "sha256": "e31a64774447bcd8b01534da0731a24b420eff0f035afb074a65e84bd20b14c5"
         },
         {
           "file": "libQnnHtpV73Stub.so",
-          "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/libQnnHtpV73Stub.so",
-          "size": 727232,
-          "sha256": "c3d167383702bf3a95dc29ec73074833754331affc1801513c0e7b6ded813332"
+          "url": "https://download.mengzhai.club/files/4bc22499-fa52-4bb7-b1b1-ad3b022353e6/63067fc8-61de-451b-a069-59e7eabefea7-libQnnHtpV73Stub.so",
+          "size": 802632,
+          "sha256": "6dda6575d5477f3a6ca8f599fbfc976e27dd7168f75c7c62ce1bca7b557d6b5c"
         },
         {
           "file": "libQnnHtpV75Skel.so",
-          "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/libQnnHtpV75Skel.so",
-          "size": 16540228,
-          "sha256": "b7adc1bb62c22d3efc4cc8a7ff26d1c6754aafe54648c2a8e1d0c661056657ea"
+          "url": "https://download.mengzhai.club/files/4bc22499-fa52-4bb7-b1b1-ad3b022353e6/b79fb503-4534-4f1a-a791-dcfd60f389fc-libQnnHtpV75Skel.so",
+          "size": 13001940,
+          "sha256": "980480ac816ceb2b5d56eaeff1020cb911dfe455d9b404535b23bf2657ab3f5b"
         },
         {
           "file": "libQnnHtpV75Stub.so",
-          "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/libQnnHtpV75Stub.so",
-          "size": 727232,
-          "sha256": "2285883895595d025c747f6518ab5fc0fc9a78b767ba1e1aabe53d8f217162f5"
+          "url": "https://download.mengzhai.club/files/4bc22499-fa52-4bb7-b1b1-ad3b022353e6/edb5a219-4441-4bc5-bbf1-adf44e39966e-libQnnHtpV75Stub.so",
+          "size": 802632,
+          "sha256": "7ba71148cf6d12f1f985962dfaef1f27c81efe9af2f014d52d678b0a782ab9e5"
         },
         {
           "file": "libQnnHtpV79Skel.so",
-          "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/libQnnHtpV79Skel.so",
-          "size": 16351348,
-          "sha256": "9e2a40fbd89f4112b60701fe4805067bae8e7aa96673b6482f5d39bdbd9c77be"
+          "url": "https://download.mengzhai.club/files/4bc22499-fa52-4bb7-b1b1-ad3b022353e6/f372dcdf-12af-4059-9e8d-236a09a6d158-libQnnHtpV79Skel.so",
+          "size": 13224236,
+          "sha256": "3c2d9554d59c001fad28d43078f7df1226f4f6bdf6e88499ead972ee1282f3a5"
         },
         {
           "file": "libQnnHtpV79Stub.so",
-          "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/libQnnHtpV79Stub.so",
-          "size": 727232,
-          "sha256": "d866680209a48b519f982c77242b0c95ebe7ef7c8e992d91861c198c9cb0e4cc"
+          "url": "https://download.mengzhai.club/files/4bc22499-fa52-4bb7-b1b1-ad3b022353e6/e64da46f-692f-4040-98a6-e2ec651a7963-libQnnHtpV79Stub.so",
+          "size": 802632,
+          "sha256": "3792ca21a41d60db80813753f825134b6e9fcdedd83afb32b07b4afcae69902b"
         },
         {
           "file": "libQnnHtpV81Skel.so",
-          "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/libQnnHtpV81Skel.so",
-          "size": 17482732,
-          "sha256": "4f061ffb402588ea619d648733b26c7d5ad3cbe9712715586b76ea94187b3b01"
+          "url": "https://download.mengzhai.club/files/4bc22499-fa52-4bb7-b1b1-ad3b022353e6/d1ae3e83-44d5-44f1-93eb-47f7d3ee9b6d-libQnnHtpV81Skel.so",
+          "size": 14206988,
+          "sha256": "47e3dac2df82e398c219be00db130cfb587b8b358e4c466a947b1342abd842e4"
         },
         {
           "file": "libQnnHtpV81Stub.so",
-          "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/libQnnHtpV81Stub.so",
-          "size": 803688,
-          "sha256": "ef0cc96ab5b4cccce59f1c02d59bb3f288d00f0045d763651ccb35591695ed0b"
+          "url": "https://download.mengzhai.club/files/4bc22499-fa52-4bb7-b1b1-ad3b022353e6/3d459a62-ab99-47b7-a2c9-124c7b6518a1-libQnnHtpV81Stub.so",
+          "size": 827072,
+          "sha256": "e77e64ce7f22d094234c2f606c34841c45036d7f5469e9d5bcb1e6e632e29628"
+        },
+        {
+          "file": "libQnnHtpV85Skel.so",
+          "url": "https://download.mengzhai.club/files/4bc22499-fa52-4bb7-b1b1-ad3b022353e6/ca8e9504-8eb7-44f1-81be-f1d35f84c54c-libQnnHtpV85Skel.so",
+          "size": 14058420,
+          "sha256": "b06247fa38ffad5b8c55a83ff7d4b5500a69282944c0942253fb57b38eaf6b40"
         },
         {
           "file": "libQnnSystem.so",
-          "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/libQnnSystem.so",
-          "size": 3635672,
-          "sha256": "2c3b913e54ec36ad2a75ff8ba392c4689fe44d45a0d06653bbd49cb56eb53971"
+          "url": "https://download.mengzhai.club/files/4bc22499-fa52-4bb7-b1b1-ad3b022353e6/91b23219-6bff-4c1f-8869-1653e538b648-libQnnSystem.so",
+          "size": 4125232,
+          "sha256": "199371bf2d3e61188bdfd19fbc6c34273d53ba11794444d85ef60e482807ce54"
         },
         {
           "file": "libQnnTFLiteDelegate.so",
-          "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/libQnnTFLiteDelegate.so",
-          "size": 1027576,
-          "sha256": "109aafe31da6ccbd5a56d1dbea75015262b6e07a0eb0a9e03552d3f0acb4fe76"
+          "url": "https://download.mengzhai.club/files/4bc22499-fa52-4bb7-b1b1-ad3b022353e6/162db9b7-2e1c-4589-8e74-de70509053b1-libQnnTFLiteDelegate.so",
+          "size": 1033864,
+          "sha256": "6629ac9508e1ef40f1a21c8b071a5ace29c1ece5e8034395aa2231ec8b0a7f18"
         },
         {
           "file": "libtensorflowlite_jni.so",
-          "url": "https://raw.githubusercontent.com/XXGUI/xxgui.github.io/refs/heads/main/jniLibs/arm64-v8a/libtensorflowlite_jni.so",
+          "url": "https://download.mengzhai.club/files/4bc22499-fa52-4bb7-b1b1-ad3b022353e6/7956e413-f24b-4e4e-9224-bb27f4414823-libtensorflowlite_jni.so",
           "size": 3837936,
           "sha256": "c02ac9887db7f450a61e57ab93fdab903d60a1b6a7ee12761eb4034d31fb15f3"
         }

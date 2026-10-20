@@ -17,6 +17,7 @@
     {"code": "SM8735", "name": "骁龙 8s Gen 4", "device_id": "584", "htp_arch": "75", "htp_arch_ver": "V75"},
     {"code": "SM8845", "name": "骁龙 8 Gen 5", "device_id": "97", "htp_arch": "81", "htp_arch_ver": "V81"},
     {"code": "SM8850", "name": "骁龙 8 Elite Gen5", "device_id": "87", "htp_arch": "81", "htp_arch_ver": "V81"},
+    {"code": "SM8975", "name": "骁龙 8 Elite Extreme Gen 6", "device_id": null, "htp_arch": "85", "htp_arch_ver": "V85"},
     
     {"code": "SM7250", "name": "骁龙 765G", "device_id": "363", "htp_arch": "68", "htp_arch_ver": "V68"},
     {"code": "SM7250-AC", "name": "骁龙 768G", "device_id": "363", "htp_arch": "68", "htp_arch_ver": "V68"},
